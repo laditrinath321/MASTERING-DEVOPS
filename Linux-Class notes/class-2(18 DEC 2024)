@@ -1,3 +1,40 @@
+LINUX :
+clear / ctrl+L 
+pwd
+whoami 
+hostnamectl set-hostname linuxserver
+hostname 
+
+==================================
+
+touch file1 
+touch file1 file2 file2 
+
+mkdir dir1 dir2 dir3 
+
+rm -rf dir1 
+
+
+cd dir1 
+
+cd ..
+--------
+ls
+ls -lrth 
+ls -la
+ll
+
+cat fname 
+==========================================
+
+yum install <pkg> 
+-----------
+
+cttl + c  --> abort 
+q --> quit 
+
+touch 
+
 [root@linuxserver ~]# history
     1  hostname
     2  whoami
