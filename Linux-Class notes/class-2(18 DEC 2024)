@@ -1,0 +1,61 @@
+[root@linuxserver ~]# history
+    1  hostname
+    2  whoami
+    3  hostname -I
+    4  pwd
+    5  ls
+    6  ll
+    7  touch file1 file2
+    8  ll
+    9  ls
+   10  ls -lrth
+   11  ls
+   12  ll
+   13  mkdir dir1 dir2 dir3
+   14  ls
+   15  ll
+   16  clear
+   17  ll
+   18  rm -rf file2
+   19  ll
+   20  rm -rd dir2
+   21  ll
+   22  rm -rf dir2
+   23  ll
+   24  cd dir1
+   25  pwd
+   26  ls
+   27  touch madhu jenkins ansible docker
+   28  ll
+   29  mkdir k8s aws linux
+   30  ll
+   31  pw
+   32  pwd
+   33  ll
+   34  cd aws/
+   35  pwd
+   36  ll
+   37  cd ..
+   38  pwd
+   39  cd ..
+   40  clear
+   41  pwd
+   42  ll
+   43  touch test
+   44  ll
+   45  cat file1
+   46  vim file1
+   47  ll
+   48  cat file1
+   49  git
+   50  java
+   51  yum install java
+   52  java --version
+   53  yum install maven
+   54  yum install docker
+   55  date
+   56  uptime
+   57  cal
+   58  cal 1947
+   59  cal aug 1947
+   60  history
