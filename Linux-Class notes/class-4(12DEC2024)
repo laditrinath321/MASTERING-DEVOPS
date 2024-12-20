@@ -1,0 +1,70 @@
+===============
+
+DATE: 20 DEC 2024:
+
+
+yum install pkg
+
+yum remove pkg -y 
+
+================================================================
+LINUX ---> VIM / NANO 
+VI/VIM EDITOR:
+
+gg - TOP LINE
+G - Ground 
+yy -- copy 
+n-yy - 
+p - paste 
+
+dd - delete a line 
+n-dd 
+
+u - undo 
+dw - delete word 
+
+----
+set nu
+set nonu 
+-------
+/madhu  (to search) 
+
+=============================================
+
+diff file1 file2
+sdiff file1 file2
+==============
+
+touch 
+
+vim 
+
+create a file using touch , vim , echo 
+
+echo " docker k8s terraform jenkins " > file2  ( overwrite) 
+echo " " >> file2  ( append) 
+
+===============
+
+uptime
+top
+free -g 
+lscpu 
+============
+
+DOWNLOAD :
+
+wget <URL/LINK > 
+
+ZIP :
+
+
+unzip <zipfilename> 
+zip -r tomcat.zip <dir>
+==============
+
+tar: 
+
+tar -xvf apache-tomcat-9.0.98.tar.gz
+
+tar -cvf tomcat.tar.gz <dir>
