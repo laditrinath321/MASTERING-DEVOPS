@@ -1,0 +1,30 @@
+DATE: 19 DEC 2024
+
+
+mkdir -p a/b/c/d/e
+
+cp -rp <src> <dest>
+
+mv src dest 
+
+absolute path vs relative path 
+
+===============================
+
+useradd madhu 
+passwd madhu 
+
+usermod -c "DevOpsUser" madhu 
+
+cat /etc/passwd
+
+--------
+su - madhu 
+whoami
+
+userdel -r username 
+-------------------
+
+head -n fname 
+tail -n fname 
+more fname
