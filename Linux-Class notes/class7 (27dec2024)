@@ -136,3 +136,9 @@ PATH=/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/l
 
 
 ==========================================
+
+which git --->  to locate executables that are available in your $PATH environment variable.
+
+whereis git --> 
+the whereis command is more general-purpose and is used to find the binary, source, and man page locations of a program or command.
+
