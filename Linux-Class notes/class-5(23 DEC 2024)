@@ -1,0 +1,137 @@
+23 dec 2024:
+
+diff file1 file2
+sdiff file1 file2
+
+========
+
+grep -iR "madhu"
+
+=================================================
+find / -name "madhu"
+
+find / -name "madhu" -type f/d 
+
+===============================
+
+sed command --> sed 's/madhu/madhukiran/' test > test2
+
+Replaces occurrences of a pattern with a specified replacement.
+Syntax: s/pattern/replacement/flags
+
+sed 's/madhu/madhukiran/' input.txt     # Replace first occurrence of 'madhu' with 'madhukiran' in each line
+sed 's/madhu/madhukiran/g' input.txt    # Replace all occurrences of 'madhu' with 'madhukiran' in each line
+sed 's/madhu/madhukiran/2' input.txt    # Replace the second occurrence of ''madhu' with 'madhukiran' in each line
+
+============================================================================
+
+df (disk free or disk filesystem) 
+df -h 
+df -m 
+
+In Windows, drives such as C:, D:, and E: are logical designations assigned to storage devices or partitions. Each drive letter represents a separate filesystem namespace, allowing users and applications to access files and directories on that specific storage unit. 
+
+
+In Linux, the concept of drive letters like C:, D:, and E: does not exist. Instead, Linux uses a single hierarchical directory structure that begins at the root directory (/). All storage devices, partitions, and network filesystems are integrated into this hierarchy by mounting them at specific directories
+
+=============
+
+du 
+
+du -sh 
+
+du -h 
+
+==========
+
+chmod (FILE PERMISSIONS) 
+
+The chmod command in Linux is used to change the file permissions. Permissions dictate who can read, write, or execute a file. Here's a comprehensive guide on using the chmod command:
+
+
+There are three types of users:
+
+u – the file owner (user)
+g – the group to which the file belongs
+o – others
+a – all (user, group, and others)
+
+------------------
+object :  madhu 
+
+owner/user    |  group  | others 
+
+rwx               rwx     rwx 
+
+r - read - 4
+w - write - 2
+x - execute - 1 
+
+
+Modes
+Modes can be specified using symbolic or numeric (octal) notation.
+
+Symbolic Notation
+r – read permission
+w – write permission
+x – execute permission
+
+
+
+Numeric (Octal) Notation
+4 – read permission
+2 – write permission
+1 – execute permission
+
+The numeric mode is a combination of these values. For example:
+
+7 – read, write, and execute (4 + 2 + 1)
+6 – read and write (4 + 2)
+5 – read and execute (4 + 1)
+4 – read only
+
+
+rwx |r-x | r-x. 2 root root        6 Apr  4 14:05 javadir
+rw- |r-- | r--. 1 root root     5562 Apr  8 13:48 linux
+
+rwx ---  ---. 1 root root     5562 Apr  8 13:48 linux
+
+rw- -w- --x. 1 root root     5562 Apr  8 13:48 linux
+
+
+o/u - full 
+g -  rw 
+ot - wx 
+
+chmod 763 linux 
+
+chmod -R 
+
+================================================
+CHOWN :
+FILE & DIRECTORY OWNERSHIP :
+
+The chown command in Linux is used to change the ownership of files and directories. This command allows you to change both the user and group ownership of a file or directory.
+
+chown [options] user[:group] file(s)
+
+1. Change the Owner of a File:
+
+      chown newuser filename
+	  
+2. Change the Group of a File:
+	  
+	  chown :newgroup filename
+
+3.Change Both the Owner and Group of a File:
+     
+	  chown newuser:newgroup filename
+	  
+4. Change the Owner and Group of Multiple Files:
+
+     chown newuser:newgroup file1 file2 file3
+
+
+5.-R – Change ownership recursively for directories and their contents:
+chown -R newuser:newgroup /path/to/directory
+==============================================================

@@ -1,0 +1,196 @@
+26 dec 24 :
+
+ps --> running processes on a system. It provides a snapshot of the currently active processes, including details like process IDs (PIDs), memory usage, CPU time, and more.
+
+ps -ef 
+Shows processes for all users, not just the current session.
+
+
+ps -ef | grep tomcat 
+
+==================================
+networking commands :
+
+PING 
+TELNET 
+
+   telnet www.google.com 443
+    telnet www.mindcircuit.in 443
+    telnet 100.26.144.255 8080
+   telnet 100.26.144.255 443
+
+NETSTAT 
+  netstat - an 
+
+  netstat -an | grep 8080
+
+==================================
+monitoring & performance:
+
+top 
+htop
+iostat
+lscpu
+free -g 
+
+
+-------------------------------------------------
+inode :
+
+In Linux and Unix-like operating systems, an inode (index node) is a data structure that stores metadata about a file or directory. Every file and directory on the filesystem is associated with an inode, which contains important information about the file's attributes and location on disk.
+
+
+File Metadata:
+
+File type: --  regular file, directory, symbolic link, , etc.
+Permissions:   (read, write, execute) for the owner, group, and others.
+Owner and Group:    User ID (UID) and group ID (GID)  
+Timestamps:  
+   Last access time (atime):           Last time the file was accessed.
+   Last modification time (mtime):     Last time the file's content was modified.
+   Last status change time (ctime):  Last time the file's metadata (permissions, owner, etc.) was changed.
+   File Size:                      Size of the file in bytes.
+   
+---------------------------------------------------
+
+softlink vs hardlink 
+
+
+
+In Linux, both soft links (symbolic links) and hard links are ways to reference files. They serve different purposes and have distinct characteristics. Let's explore each with examples:
+
+ln -s /path/to/target/file   /path/to/link
+
+ln  /path/to/target/file   /path/to/hardlink
+
+
+---------------------------------
+curl vs wget 
+
+# Download a file
+curl -O https://example.com/file.zip
+
+
+# Send a POST request with data
+curl -X POST -d "username=user&password=pass"  https://api.example.com/login
+
+-------
+
+curl -I www.google.com
+
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=ISO-8859-1
+Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-WVgteYZWKCo_UBqJfS17xA' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
+Date: Wed, 24 Jul 2024 02:50:54 GMT
+Server: gws
+X-XSS-Protection: 0
+X-Frame-Options: SAMEORIGIN
+
+-------
+Timeout: 
+
+curl -m 10 https://example.com
+
+
+======================
+
+
+[root@linux opt]# history
+    1  top
+    2  htop
+    3  yum install htop
+    4  htop
+    5  iostat
+    6  ps
+    7  who
+    8  exit
+    9  ps -ef
+   10  ps -ef
+   11  ps -e
+   12  exit
+   13  ps
+   14  ps -ef
+   15  ps
+   16  date
+   17  cd /opt/
+   18  l
+   19  ll
+   20  wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.98/bin/apache-tomcat-9.0.98.tar.gz
+   21  ll
+   22  tar -xvf apache-tomcat-9.0.98.tar.gz
+   23  ll
+   24  yum install java -y
+   25  java --version
+   26  ll
+   27  cd apache-tomcat-9.0.98/
+   28  ll
+   29  cd bin/
+   30  ll
+   31  ./startup.sh
+   32  ps -ef
+   33  ps -ef | grep tomcat
+   34  kill -9 28424
+   35  ps -ef | grep facebook
+   36  ll
+   37  ps -ef | grep tomcat
+   38  ll
+   39  ./startup.sh
+   40  ps -ef | grep tomcat
+   41  ll
+   42  ./shutdown.sh
+   43  kill -9
+   44  ll
+   45  cd /opt/
+   46  ll
+   47  curl https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.98/bin/apache-tomcat-9.0.98.zip
+   48  curl -O https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.98/bin/apache-tomcat-9.0.98.zip
+   49  ll
+   50  curl -I www.google.com
+   51  curl -I www.googlllllllllllldfjasje.com
+   52  ping www.mindcircuit.in
+   53  curl www.google.com
+   54  ps -ef | grep tomcat
+   55  ./apache-tomcat-9.0.98/bin/startup.sh
+   56  ps -ef | grep tomcat
+   57  netstat -an
+   58  netstat -an | grep 8080
+   59  ./apache-tomcat-9.0.98/bin/shutdown.sh
+   60  netstat -an | grep 8080
+   61  netstat -an
+   62  ./apache-tomcat-9.0.98/bin/startup.sh
+   63  netstat -an
+   64  telnet www.google.com 443
+   65  yum install telnet -y
+   66  telnet www.google.com 443
+   67  telnet www.mindcircuit.in 443
+   68  telnet 100.26.144.255 8080
+   69  telnet 100.26.144.255 443
+   70  top
+   71  yum install htop -y
+   72  htop
+   73  iostat
+   74  ll
+   75  vim javafile
+   76  ll
+   77  du -sh javafile
+   78  LL
+   79  ll
+   80  ln javafile java2
+   81  ll
+   82  vim javafile
+   83  ll
+   84  cat java2
+   85  ll
+   86  rm -rf javafile
+   87  ll
+   88  cat java2
+   89  ll
+   90  vim jenkins
+   91  ll
+   92  ln -s jenkins jenkins_sl
+   93  ll
+   94  rm -rf jenkins
+   95  ll
+   96  cat jenkins_sl
+   97  history

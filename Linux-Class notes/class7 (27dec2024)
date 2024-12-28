@@ -1,0 +1,144 @@
+27 DEC 2024 :
+
+
+-------------------------
+
+cut -d ":" -f 1 /etc/passwd
+cut -d ":" -f 1,6 /etc/passwd
+cut -d ":" -f 1,2,3,4 /etc/passwd
+cut -d ":" -f 1-4 /etc/passwd
+
+cat /etc/passwd | cut -d ":" -f 1,6 /etc/passwd
+
+=========================================
+
+awk command 
+
+cat /etc/passwd | awk -F":" '{print $1 "=" $6}'
+
+
+cat /etc/passwd | awk -F":" '{print $1}'
+=========================================================================
+
+
+winscp
+
+------------------------------
+scp src dest 
+
+scp 
+
+scp 
+ scp -rp -i testbhaskar.pem filepath ec2-user@34.205.156.29:/opt/
+
+------------------------
+
+========================================================
+
+init --> parent of all process with pid 1 
+
+    init is the very first process to run when a Linux system boots. It's responsible for starting other processes and services that are necessary for the system to function.
+	
+    Controlling Runlevels: init plays a crucial role in managing runlevels, which define the state of the system and the services that are running.
+	
+-------------------------
+runlevels :
+
+In Linux, run levels represent different operating states or modes of the system. 
+
+run levels were used to define the state of the system during system initialization or shutdown
+
+
+Run Level 0: System Halt/Shut down
+          Terminates all processes and shuts down the system gracefully.
+		
+Run Level 1: Single-user mode { used for recovery} 
+          Only a single user can work on the system, typically used for system maintenance tasks.
+		  
+Run Level 2: Multi-user mode without networking (with out NFS) 
+          Multiple users can work on the system simultaneously, but networking services are not started.
+		  
+Run Level 3: Multi-user mode with networking ( USED MOSTLY FOR SERVER ) 
+           Multiple users can work on the system simultaneously, and networking services (such as TCP/IP networking) are started.
+		   
+Run Level 4: Undefined (often not used).
+           Historically, some distributions used run level 4 for special purposes, but it's generally not standardized and remains unused in many setups.
+		   
+Run Level 5: Graphical mode.
+           Starts the system into a full graphical environment, typically with a display manager like GDM or LightDM.
+		   
+Run Level 6: Reboot.
+          Reboots the system, shutting down all processes and restarting the system.
+
+------------------
+to change run levels use init command 
+
+init 0 
+init 6 
+
+=====================================================
+
+----------------
+ENVIRONMENT VARIABLES :
+
+These varibales are dynamic 
+environment variables provide a way to customize the behavior of software and the operating system itself.
+
+User specific environemnt variables 
+
+   env
+   echo USER
+   echo $USER
+   printenv USER
+   
+   export VAR=testmadhu
+   printenv VAR
+   echo $VAR
+
+   env | grep USER
+   env | grep VAR
+   unset VAR
+-------------
+   vim .bash_profile
+    ---- export VAR2="Madhu kiran"
+  
+   source .bash_profile
+   
+   printenv VAR2
+   echo $VAR2
+
+-----------------
+Global/system specific environemnt variables 
+
+       cd /etc/
+   ls
+   ll environment
+   vim environment
+        export GLOBALVAR="kiran madhu" 
+   source environment
+   echo $GLOBALVAR
+   printenv GLOBALVAR
+
+
+---------------------
+PATH
+
+The PATH variable is a specific type of environment variable that determines the directories where executable files are searched for when you type a command in the shell without specifying its full path.
+
+  If PATH is set to /usr/local/bin:/usr/bin:/bin, and you type ls, the system will look for ls in /usr/local/bin, then /usr/bin, and finally /bin.
+
+ls 
+
+
+PATH=/root/.local/bin:/root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+
+PATH=/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+
+
+==========================================
+
+which git --->  to locate executables that are available in your $PATH environment variable.
+
+whereis git --> 
+the whereis command is more general-purpose and is used to find the binary, source, and man page locations of a program or command.
+
