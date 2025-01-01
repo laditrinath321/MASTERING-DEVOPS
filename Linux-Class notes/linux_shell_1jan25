@@ -1,0 +1,187 @@
+[root@serv1 opt]# cat devopsengineer.sh
+
+#!/bin/bash
+
+##############################################
+# AUTHOR: MADHU
+# DATE: 1 JAN 2024
+#
+########################################
+
+set -x
+set -e
+cd /opt
+echo "ENTER THE NAME OF THE DEVOPS ENGINNER"
+read name
+
+mkdir $name
+cd name
+
+touch linux jenkins maven docker k8s
+mkdir aws
+cd aaws
+touch ec2 route53 s3
+
+
+=========================================================================================
+[root@serv1 opt]#
+[root@serv1 opt]#
+[root@serv1 opt]# cat 2-devopsengineer.sh
+
+#!/bin/bash
+
+##############################################
+# AUTHOR: MADHU
+# DATE: 1 JAN 2024
+#
+########################################
+
+set -x
+set -e
+cd /opt
+echo "ENTER THE NAME OF THE DEVOPS ENGINNER"
+mkdir $1
+cd $1
+
+touch linux jenkins maven docker k8s
+mkdir aws
+cd aaws
+touch ec2 route53 s3
+
+
+===========================================================================
+
+[root@serv1 opt]# cat tomcat.sh
+#!/bin/bash
+
+#To setup tomcat
+#set -x
+set -e
+
+yum install java -y
+cd /opt
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.98/bin/apache-tomcat-9.0.98.tar.gz
+sudo tar -xvf /opt/apache-tomcat-9.0.98.tar.gz
+sudo /opt/apache-tomcat-9.0.98/bin/startup.sh
+
+
+echo "TOOMCAT PROCESS ID IS: "
+ps -ef | grep tomcat | awk -F" " '{print $2}' | head -1
+
+
+=============================================================================
+
+[root@serv1 opt]# cat sum.sh
+#!/bin/bash
+
+
+echo "ENTER THE FIRST NUMBER"
+read num1
+
+echo "ENTER THE SECOND NUMBER"
+read num2
+
+sum=$((num1 + num2))
+
+echo "sum of two numbers is $sum"
+
+
+=====================================================================
+[root@serv1 opt]# cat 2-sum.sh
+#!/bin/bash
+
+
+num1=$1
+num2=$2
+
+sum=$((num1 + num2))
+
+echo "sum of two numbers is $sum"
+
+
+====================================================================
+
+[root@serv1 opt]# cat positionalargs.sh
+
+#!/bin/bash
+
+echo "The name of this script is: $0"
+echo "The first argument is: $1"
+echo "The second argument is: $2"
+echo "Number of arguments passed: $#"
+echo "All the arguments passed - as SINGLE word: $*"
+echo "All the arguments passed - as individual words: $@"
+echo "Exit status is: $?"
+
+======================================
+
+
+WHAT IS SHELL SCRIPT & WHY SHELL SCRIPT ?
+
+A shell script is a file with a set of shell commands , for Automation of Repetetive tasks .
+
+What is a variable ?
+
+a variable is a charecter string to which we assign a value. The value assigned could be a number , text , filename , device or any other type of Data .  Simply its a pointer / reference to actual data .
+
+
+SHELL SCRIPTING -  AUTOMATION
+
+===================================
+HASH-BANG  OR SHEBANG
+
+#!/bin/bash
+#!/bin/sh
+#!/bin/dash
+
+
+The shebang line, 
+starts with #! followed by the path to the interpreter that should be used to execute the script. 
+
+
+bash
+
+#!/bin/bash
+
+==========================================
+
+==================================================
+
+Debugging / Troubleshooting :
+ 
+
+set -x  
+    Turn on debugging.prints each command before it is executed.
+
+set +x  
+    Turn off debugging
+	
+--------
+set -e  
+    Exit on error , Useful for error handling; exits the script immediately if any command fails.
+
+   Causes the script to exit immediately if any command exits with a non-zero status (indicating an error).
+	
+	
+====================================================================
+
+====================================================================
+
+JENKINS INSTALLATION SCRIPT :
+vim jenkins.sh 
+
+
+#!/bin/bash 
+sudo yum update –y
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key	
+
+sudo yum upgrade
+sudo dnf install java-17-amazon-corretto -y
+sudo yum install jenkins -y
+sudo systemctl enable jenkins
+sudo systemctl start jenkins 
+
+
+=====================================================================
