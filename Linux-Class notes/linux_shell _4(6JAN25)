@@ -1,0 +1,158 @@
+NESTED LOOPS :
+[root@linuxserver tmp]# cat test.sh
+
+#!/bin/bash
+a=0
+while [ "$a" -le 5 ];
+do
+
+        b=$a
+        while [ $b -ge 0 ];
+
+        do
+               echo -n "$b "
+               b=$((b-1))
+        done
+
+        echo "$a"
+        a=$((a+1))
+
+done
+--------------
+
+0
+1 0
+2 1 0
+3 2 1 0
+4 3 2 1 0
+5 4 3 2 1 0
+-------------------------
+======================================================================================================================================================================
+
+FUNCTIONS 
+          -- ALLOWS TO GROUP A SET OF COMMANDS INTO A SINGLE, REUSABLE UNIT. 
+		  -- BREAK DOWN TOTAL FUNCTIONALITY OF SCRIPT INTO LOGICAL SUB-SECTIONS 
+          -- ENCAPSULATE AND REUSE CODE
+		  -- WE CAN CALL FUNCTIONS WHEN EVER NEEDED
+		  -- MAKE YOUR SCRIPTS MORE ORGANIZED, MODULAR, AND EASIER TO MAINTAIN.
+
+-----------------
+SHELL :
+
+function_name() {
+        # Commands to be executed
+}
+
+
+------------
+PYTHON:
+
+def function_name(parameters):
+        # Commands to be executed
+    return value
+
+
+
+
+====================================================================
+
+#!/bin/bash
+
+
+create_eks_cluster()
+{
+  echo "CREATING EKS CLUSTER"
+    --- --
+	---
+	--- 
+	--- 
+}
+
+
+create_eks_cluster lab
+
+create_eks_cluster prod
+
+create_eks_cluster UAT
+====================================================================
+
+#!/bin/bash
+
+add_numbers() {
+    local sum=$(( $1 + $2 ))
+    echo "The sum of $1 and $2 is: $sum"
+}
+
+add_numbers 5 10
+====================================================================
+[root@linuxserver linux_shell]# cat function_sum.sh
+#!/bin/bash
+
+add_numbers()
+{
+
+       local sum=$(($1+$2))
+        echo "sum of 2 numbers is $sum"
+
+}
+
+
+add_numbers 5 6
+add_numbers 1 2
+add_numbers 8 9
+add_numbers 3 8
+add_numbers 9 1
+add_numbers 2 8
+
+====================================================================
+
+
+#!/bin/bash
+addnumbers()
+{
+       local sum=$(($1+$2))
+        echo "sum of 2 numbers is $sum"
+}
+
+
+echo "enter no-1"
+read a
+
+echo "enter no 2"
+read b
+
+addnumbers $a $b
+
+---------------------------------------------
+example with return:
+
+
+#!/bin/bash
+addnumbers()
+{
+       loal sum=$(($1+$2))
+        return $sum
+}
+
+
+echo "enter no-1"
+read a
+
+echo "enter no 2"
+read b
+
+addnumbers $a $b
+
+result=$?
+
+echo "the sum is $result"
+============================================================================
+#!/bin/bash
+
+greet() {
+    echo "Hello, $1!"
+}
+
+
+greet "Madhu"
+greet "kiran"
