@@ -1,0 +1,61 @@
+=======
+DATE: 8JAN2025
+
+Region: 
+A region is a geographically isolated area that contains multiple data centers. AWS has multiple regions worldwide, and each region is independent, providing low-latency and high-availability services to users in that specific area.
+
+Availability Zone (AZ): 
+An availability zone is a data center or a group of closely connected data centers within a region. Each region consists of multiple availability zones to ensure high availability and fault tolerance. AZs are designed to be isolated from failures in other AZs, but they are connected to provide low-latency networking.
+-----------------------------------------------
+AZS:
+ Provides isolation and redundancy
+ low-latency, high-bandwidth connectivity between them.
+ To achieve high availability 
+ 
+===============================================
+SOFTWARES TO INSTALL :
+Git bash 
+
+
+ 
+BASIC LINUX COMMANDS :
+========================================================
+
+sudo su -       ( To switch to root user) 
+hostnamectl set-hostname servername ( To setup server name) 
+
+touch fname1   -----> to create files 
+mkdir dir1    ---->   to create files 
+
+ls    ----->    to list files 
+ll     ----->    long list view
+cd dirname  ----->   to change directory
+ 
+
+=========================================================
+lsblk ----->  ( TO LIST BLOCK STORAGE ) 
+
+df -h  -----> ( To check Disk File system & Usage ) 
+df -Th  
+ 
+=================================================== 
+EBS : 
+SNAPSHOT 
+
+-----------------------
+Server1:
+mkfs -t ext4 /dev/xvdf
+mkdir /madhu
+mount -t ext4 /dev/xvdf /madhu
+
+
+server2:
+mkdir /kiran
+mount -t ext4 /dev/xvdf /kiran
+================================================
+
+#!/bin/bash
+yum install httpd -y
+systemctl start httpd
+systemctl enable httpd
+echo "WELCOM TO DEVOPS traininghub from $(hostname) SERVER" > /var/www/html/index.html
