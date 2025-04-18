@@ -57,10 +57,6 @@ to ensure it doesn’t kill all your instances at the same time. If something go
 command, using a UI, or automatically based on CPU usage.
 
 =================================================================================
-CHALLENGES WITH DOCKER :
-
-
-
 
 WHY K8S 
 
@@ -100,12 +96,11 @@ The Master Node is the brain of the Kubernetes cluster. It manages the cluster, 
      
      
 	 KUBE-CONTROLLER-MANAGER:     
-     The controller manager is responsible for ensuring that the cluster's desired state is maintained. It runs various controllers (e.g., replication controllers, deployment controllers) that monitor the state of the system and take action if the current state does not match the desired state.
-     
+     The controller manager is responsible for ensuring that the cluster's desired state is maintained. It runs various controllers (e.g., replication controllers, deployment controllers) that monitor the state of the system and take action if the current state does not match the desired state.     
      Example controllers include replica set controllers, deployment controllers, and node controllers.
      
      CLOUD-CONTROLLER-MANAGER (OPTIONAL):     
-     This component is used when running Kubernetes in a cloud environment. It interacts with the underlying cloud provider (e.g., AWS, Google Cloud) to manage resources like load balancers, volumes, and instances.
+     This component is used when running Kubernetes in a cloud environment. It interacts with the underlying cloud provider (e.g., AWS, AZURE , Google Cloud) to manage resources like load balancers, volumes, and instances.
      
      It helps in maintaining cloud-specific services in coordination with Kubernetes.
      
@@ -116,10 +111,8 @@ The Master Node is the brain of the Kubernetes cluster. It manages the cluster, 
      A Worker Node (also called a Minion) runs the applications and workloads in the form of Pods. Each worker node contains the following components:
      
      KUBELET:     
-     The kubelet is an agent running on each worker node that ensures the containers within the pods are running and healthy.
-     
-     It communicates with the API server to report the status of the node and its pods.
-     
+     The kubelet is an agent running on each worker node that ensures the containers within the pods are running and healthy.     
+     It communicates with the API server to report the status of the node and its pods.     
      The kubelet ensures that containers are running as specified in the pod's configuration and takes action to rectify any issues (e.g., restarting a failed container).
      
 	 
@@ -127,7 +120,7 @@ The Master Node is the brain of the Kubernetes cluster. It manages the cluster, 
      The kube-proxy manages networking for the Kubernetes cluster, providing networking services such as load balancing, service discovery, and routing traffic to the right pod.     
      It helps route requests to the correct pod and maintains network rules to manage incoming and outgoing traffic.
      
-     CONTAINER RUNTIME (DOCKER)      
+     CONTAINER RUNTIME (DOCKER/ cri-o / containerd)      
      The container runtime is responsible for running the containers inside a pod. Kubernetes supports various runtimes, but Docker was the default (although Kubernetes is moving toward containerd and other runtimes).
      
      It pulls container images, starts containers, and manages the lifecycle of containers within the pods.
@@ -162,6 +155,8 @@ aws-cli/2.23.9 Python/3.12.6 Windows/11 exe/AMD64
 
 
 5. visual studio code  (IDE ) 
+   - For syntax auto suggestions / syntax auto completion 
+   - easy to manage the code / script 
 
 ============================
 
@@ -179,3 +174,571 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 
 ============================================================
+
+Treditional approach - Self managed , barematel , customer managed k8s cluster 
+
+Kubernetes Control Plane - Self Managed  
+   Need to make Control Plane Highly Available
+   Maintain multiple EC2 in multiple AZ
+   Scale Control Plane if needed
+   Keep etcd up and running
+   Overhead of managing EC2s
+   Security Patching
+   Replace failed EC2s/vms/physical servers
+   Orchestration for Kubernetes Version Upgrade
+-------------------------------------------------------
+   
+CLOUD MANAGED KUBERNETES ( EKS / AKS / GKE ) 
+
+Kubernetes Control Plane - AWS Managed - eks
+
+AWS Manages Kubernetes Control Plane
+Amazon Elastic Kubernetes Service : 
+● AWS maintains High Availability - Multiple EC2s in Multiple AZs
+● AWS Detects and Replaces Unhealthy Control Plane Instances
+● AWS Scales Control Plane
+● AWS Maintains etcd
+● Provides Automated Version Upgrade and Patching
+
+
+EKS K8S CLUSTER SETUP 
+
+------------------
+Software installations :
+
+1. VISUAL STUDIO CODE -- IDE 
+   writing a manifest files ( kubernetes obeject definition file in yaml format) 
+    Using IDE ( integrated developement environment) - Microsoft visual studio code 
+	
+	
+ADDING	 ---- yaml extension :
+	----------------------------
+	    "yaml.schemas": {
+    
+    
+      "kubernetes": "*.yaml"  
+    
+    },
+	---------------------------------
+
+--------------------------------------
+CLUSTER  OPTIONS :
+
+
+Ways To Spin Up EKS Cluster:
+
+           
+           eksctl CLI
+          
+		   
+--------------------------
+Tools:
+        Local PC  terminal (Using AWSCLI & aws configure )
+	
+           AWS Cloud9  (Terminal)
+         Amazon EC2   (Command Line)		 
+	   
+=======================	   
+aws configure
+
+Accesskey 
+Secret Access key 
+---
+AKIAQGYBxxxxxxxxxx
+w1Ub+RhBsWQ0By/Jvxxxxxxxxxxxxxxxxxxxx
+
+1. awscli & configufre 
+aws sts get-caller-identity
+
+once configure is done , our terminal will have admin accss to our aws account 
+==========================
+
+
+=======================
+What is eksctl - CloudFormation stack
+  
+
+● CLI tool for creating clusters on EKS
+● Easier than console
+● Abstracts lots of stuff - VPC, Subnet, Sec. Group , nodes , docker etc.
+using CloudFormation stack 
+
+----------------
+
+=======================================================
+eksctl create cluster  --> it creates  two m5.large large nodes by default for data plane . Insted go for t3.micro
+
+Control Plane - AWS WILL TAKE CARE ! --> $O.10 bill for control plane
+Data Plane  - 2 m5.large (
+----------------------------------------------------
+eksctl create cluster --name <name> --version <> --nodegroup-name <> --node-type t3.micro --nodes 4 --managed 
+
+
+eksctl create cluster --name b15dcluster  --nodegroup-name b15ng --node-type t3.micro --nodes 4 --managed 
+
+eksctl get cluster 
+eksctl delete cluster <clustername> 
+=============================================================
+
+eksctl Commands
+
+eksctl create cluster   
+------ Create EKS Cluster with one nodegroup containing 2 m5.largenodes
+
+eksctl create cluster --name <name> --version <> --nodegroup-name <> --node-type t3.micro --nodes 4 --managed 
+
+-------------------
+A node group is a collection of worker nodes (EC2 instances) within a Kubernetes cluster that share the same configuration — such as instance type, AMI, and scaling settings.
+
+-----------------------------------------
+eksctl create cluster --name b15cluster --nodegroup-name b15ng --node-type t3.micro --nodes 2 --managed
+
+----------
+2024-11-07 19:03:13 [ℹ]  waiting for CloudFormation stack "eksctl-b15cluster-cluster"
+:
+:
+2024-11-07 19:34:33 [ℹ]  waiting for CloudFormation stack "eksctl-b15cluster-nodegroup-b15ng"
+:
+:
+2024-11-07 19:37:57 [ℹ]  nodegroup "b15ng" has 4 node(s)
+2024-11-07 19:37:57 [ℹ]  node "ip-192-168-1-245.ec2.internal" is ready
+2024-11-07 19:37:57 [ℹ]  node "ip-192-168-30-5.ec2.internal" is ready
+2024-11-07 19:37:57 [ℹ]  node "ip-192-168-48-160.ec2.internal" is ready
+2024-11-07 19:37:57 [ℹ]  node "ip-192-168-52-207.ec2.internal" is ready
+2024-11-07 19:37:57 [✔]  created 1 managed nodegroup(s) in cluster "b15cluster"
+2024-11-07 19:38:01 [ℹ]  kubectl command should work with "C:\\Users\\Dell\\.kube\\config", try 'kubectl get nodes'
+2024-11-07 19:38:01 [✔]  EKS cluster "b15cluster" in "us-east-1" region is ready
+
+
+--------------------------------
+CONTROL PLANE (MASTER NODES) :
+
+Kubernetes master nodes are distributed across several AWS availability zones (AZ), and traffic is managed by Elastic Load Balancer (ELB).
+
+EKS is a managed service, so you have no direct access to the master nodes. And you don't need the access.
+==================================
+
+pod - Containers are encapsulated into a k8s object called pod ,in simple words pod is a abstraction on containers 
+
+Pod can have multiple continers but in general not of same container type (mostly helper container) 	
+
+--------------------------------------------
+Creating a POD from Commandline : 
+
+docker run --name cont1 iname 
+kubectl run pod1 --image=tomcat
+
+=====================
+docker run -it --name cont1 iname 
+kubectl run pod1 --image=tomcat
+
+kubectl cluster-info
+kubectl cluster-info --dump
+=================================================================
+
+kubectl run test1k8s --image=tomcat
+
+kubectl get pods
+kubectl get pods -o wide 
+kubectl delete pod testk8s
+
+
+==========================================================================================
+
+yaml - one of the data structure format to represent data 
+       yaml file is used to represent data , in our case k8s object configuration data
+
+for ex : 
+
+server details :
+
+name = fbserver 
+owner = Madhu
+created = 11-4-2025 
+status = active 
+
+name = instasever
+owner = kiran
+created = 11-4-2025 
+status = active 
+
+
+--- show above server data as xml , yaml and json format 
+
+-----------------------------------
+key value pair - 
+
+name: server1
+
+-------------------
+Array/ List :
+
+Fruits:
+- grape 
+- banana
+- Orange: 
+    Calories: 50
+	Fat: 0.1 g
+    Carbs: 5g   
+
+    
+- apple
+    Fat: 0.1 g
+    Carbs: 5g
+    Calories: 50
+    
+    
+-------------------
+
+Dictionary - Set of properties , grouped together
+
+Orange: 
+   Calories: 50
+   Fat: 0.1 g
+   Carbs: 5g
+   
+   
+make sure we are giving spaces properly 
+ - equal no of spaces   
+----------------------------------------
+
+cat fbpod1.yaml
+
+
+fbpod1.yaml
+---------------------------
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fbpod
+  labels:
+    app: facebook
+    env: lab 
+spec:
+  containers:
+    - name: fbcont
+      image: tomcat
+
+=======================================
+
+kubectl get pod
+kubectl describe pod fbpod
+kubectl get po
+kubectl delete pod fbpod
+kubectl get po
+
+=======================================================================================
+REPLICA SET: 
+
+spec : we will create a template section under spec to provide a pod template to be used by Replication contoller/ Relica set to create replicas 
+
+
+Replication Controller vs Replica set :
+
+   Replica set requires a selector defination 
+   i,e 
+   seletor is not mandate for RC ,
+   but for Replica set it is mandate , a user input is required for this property like match labels 
+
+
+FOR REEPLICA SET manifest files ---> -
+check for  manifest files in zip folder
+
+=======================================================================================
+DATE: 14 APR 24
+
+--------
+kubectl run pod nginx --image nginx:latest --dry-run -o yaml 
+
+--------
+kubectl create deployment instadeploy --image=devopshubg333/batch15d:mcappimag --replicas=3 --dry-run -o yaml
+
+--------
+kubectl explain pods ---> gives explaination of pods manifest files 
+
+--------
+kubectl explain pods.metadata
+
+--------
+kubectl cluster-info dump ---> total cluster info
+
+--------
+
+kubectl api-resources --->resorces we can create like podscontainers,deployments...etc
+
+kubectl api-resources | grep pod 
+--------
+kubectl cordon instance ip ---> unschedule the nodes ,no new pod will be schedule
+Marks a node as unschedulable—new pods will not be scheduled on it, but existing pods continue to run.. 
+when You want to stop placing new workloads on the node but don't want to disrupt what's already running.
+--------
+
+kubectl drain ip-172-20-103-135.ec2.internal --->  evicts all pods to another node and schedule will be disable
+--------
+kubectl uncordon ip-172-20-38-30.ec2.internal
+
+
+kubectl get all 
+==========================		
+kubectl get replicaset
+NAME     DESIRED   CURRENT   READY   AGE
+tomcat   5         5         5       116s
+-----------
+
+So Why do we need labels and Selectoers ?
+
+Labels can be used as filter to replica set , so replica set will monitor and ensure desired no of pods are running 
+
+==========================================================
+scale replicas and ways to scale :
+
+1. kubectl scale replicaset fb-rs --replicas=3
+1. Change manifest file -->- then kubectl apply -f replicaset.yaml
+3. kubectl scale --replicas=6 -f replicaset.yaml
+4. kubectl edit replicaset <replicasetname> --> opens a temporoay file in memory
+
+
+=====================================================================
+
+To create a deployment using imperative command, use kubectl create:
+
+kubectl create deployment nginx --image=nginx
+
+kubectl create deployment instadeploy --image=<image> --replicas=3 --dry-run -o yaml
+--------------------------------------------------------
+
+
+cat 1-deploy_AC_V1.yaml
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fb-deploy
+  labels:
+    app: facebook
+    env: lab 
+
+spec:
+  selector:
+    matchLabels:
+      app: facebook
+  replicas: 3  
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+  template:
+    metadata:
+      name: fbpod
+      labels:
+        app: facebook
+        env: lab 
+        Version: AC_V1
+    spec:
+      containers:
+        - name: fbcont1
+          image: devopshubg333/batch15d:mcfbapp
+          ports:
+            - containerPort: 80
+      
+====================
+kubectl apply -f 02-DEPLOYMNET-PRACTICE/1-deploy_AC_V1.yaml
+
+==================================================================
+
+cat 2-deploy_VC_v2.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fb-deploy
+  labels:
+    app: facebook
+    env: lab 
+
+spec:
+  selector:
+    matchLabels:
+      app: facebook
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+  template:
+    metadata:
+      name: fbpod
+      labels:
+        app: facebook
+        env: lab 
+        Version: VC_V2
+    spec:
+      containers:
+        - name: fbcont1
+          image: devopshubg333/batch15d:python_flaskapp
+          ports:
+            - containerPort: 80
+      
+==============
+kubectl apply -f 02-DEPLOYMNET-PRACTICE/1-deploy_AC_V1.yaml
+kubectl apply -f 02-DEPLOYMNET-PRACTICE/2-deploy_VC_v2.yaml
+
+ kubectl get deployment
+
+------------
+
+ kubectl get all
+ kubectl describe deploy fb-deploy
+ kubectl get deploy
+ kubectl get po --watch
+ kubectl get all
+ kubectl rollout history deploy fb-deploy
+ kubectl describe deploy fb-deploy
+ kubectl rollout unpause deploy fb-deploy
+ kubectl rollout resume deploy fb-deploy
+ kubectl rollout undo deploy fb-deploy
+ kubectl describe deploy fb-deploy
+
+kubectl create deployment instadeploy --image=devopshubg333/batch15d:mcappimag --replicas=3 --dry-run -o yaml
+
+=============================================================================
+kubectl get po --watch 
+kubectl rollout history deploy fbdeploy
+
+kubectl get rs 
+==========================================================
+kubectl rollout pause deploy fbdeploy
+ deployment.apps/fbdeploy paused
+
+====================
+kubectl rollout resume deploy fbdeploy
+ deployment.apps/fbdeploy resumed
+
+===================
+kubectl rollout undo deploy fbdeploy
+deployment.apps/fbdeploy rolled back
+==========================================
+
+kubectl rollout history deploy fbdeploy
+
+
+======================
+
+SERVICES:
+
+
+ cat 1-deploy.yaml 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-deploy
+  labels:
+     app: httpd
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: httpd
+
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      containers:
+      - name: httpd-ctr
+        image: httpd
+        ports:
+        - containerPort: 80
+		
+		
+	===================================================	============
+cat lb-svc.yaml 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-lb
+  labels:
+     app: httpd
+
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP 
+  selector:
+    app: httpd
+				
+		
+		===========================================================================
+		
+		
+cat cluster-ip.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-cip-svc
+  labels:
+     app: httpd
+
+spec:
+  type: ClusterIP
+  ports:
+  - port: 82
+    targetPort: 80
+    protocol: TCP 
+  selector:
+    app: httpd
+
+===================================================================
+cat nodeport.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-nodesvc
+  labels:
+     app: httpd
+
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 31009
+	targetPort: 80
+    protocol: TCP 
+  selector:
+    app: httpd
+
+==========================
+NameSpaces :
+
+Namespaces are Kubernetes objects which partition a single Kubernetes cluster into multiple virtual clusters. Each Kubernetes namespace provides the scope for Kubernetes Names it contains; which means that using the combination of an object name and a Namespace, each object gets an unique identity across the cluster.
+==============
+
+kubectl get pod -o wide
+kubectl get pod -o wide --all-namespaces
+
+=================================
+
+kubectl get ns
+
+kubectl create ns kirannamespace
+
+kubectl create -f pod.yaml -n kirannamespace
+
+kubectl get pods --all-namespaces
+
+
+
