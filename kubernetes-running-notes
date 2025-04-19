@@ -1,0 +1,923 @@
+CHALLENGES WITH DOCKER:
+========================
+- Single Docker host 
+- downtime 
+- NO High availability, not Production grade / Enterprise level 
+- No self Healing / Auto healing 
+- No proper Auto scaling / Limited auto-scaling and self-healing capabilities
+- Managing multiple containers at scale is tough
+- No built-in orchestration for container deployment
+- Networking between containers can get complex
+- Load balancing across containers isn’t automatic
+- Monitoring and logging need extra tools
+
+- DOCKER CAN NOT ORCHESTRATE
+
+==============================================
+
+
+CONT.ORC CONCEPTS ---> DOCKER SWARM / K8S 
+
+WHY KUBERNETES (K8S):
+=========================
+- Automates container orchestration & Automated Scheduling (hpa) 
+- Scales containers up or down easily
+- Handles networking across clusters
+- Self-healing: restarts failed containers
+- Built-in load balancing
+- Simplifies deployment and updates
+- Automated rollouts & rollback: 
+
+
+========================================================================
+What is Kubernetes?
+•	Kubernetes is an orchestration engine and open-source platform for managing containerized applications.
+•	Responsibilities include container deployment, scaling & descaling of containers & container load balancing.
+•	Actually, Kubernetes is not a replacement for Docker, But Kubernetes can be considered as a replacement for Docker Swarm, Kubernetes is significantly more complex than Swarm, and requires more work to deploy.
+•	Born in Google ,written in Go/Golang. Donated to CNCF(Cloud native computing foundation) in 2014.
+•	Kubernetes v1.0 was released on July 21, 2015.
+
+
+FEATURES:
+
+•	Automated Scheduling: 
+Kubernetes provides advanced scheduler to launch container on cluster nodes based on their resource
+requirements and other constraints, while not sacrificing availability.
+
+•	Self Healing Capabilities:
+ Kubernetes allows to replaces and reschedules containers when nodes die. It also kills containers that don’t
+respond to user-defined health check and doesn’t advertise them to clients until they are ready to serve.
+
+•	Automated rollouts & rollback: 
+Kubernetes rolls out changes to the application or its configuration while monitoring application health
+to ensure it doesn’t kill all your instances at the same time. If something goes wrong, with Kubernetes you can rollback the change.
+
+•	Horizontal Scaling & Load Balancing:
+ Kubernetes can scale up and scale down the application as per the requirements with a simple
+command, using a UI, or automatically based on CPU usage.
+
+=================================================================================
+
+WHY K8S 
+
+High availability , Zero downtime , 
+
+K8S ARCHITECTURE:
+================
+
+Kubernetes Architecture is based on a master-worker model, where the Master manages and controls the cluster, and the Workers run the containerized applications. Let's break down the architecture and its core components.
+
+KUBERNETES ARCHITECTURE :
+
+Master Node:    The control plane responsible for managing the Kubernetes cluster.
+Worker Nodes:   The nodes that run the containerized applications (pods).
+Cluster:        A set of worker nodes managed by the master node.
+
+
+---------------------------------------
+
+1. MASTER NODE (CONTROL PLANE): 
+============================
+The Master Node is the brain of the Kubernetes cluster. It manages the cluster, maintains the desired state, schedules workloads, and monitors the overall health of the cluster. It consists of several critical components:
+
+     KUBE-APISERVER:     
+     The API server is the central point of contact for all Kubernetes components. It handles requests from clients, whether that’s the kubectl CLI, the Kubernetes UI, or other components in the system.     
+     The API server exposes the REST API, which is used by external clients to interact with Kubernetes. It ensures the system’s state is updated.
+     
+	 
+     ETCD:     
+     etcd is the key-value store used to store the configuration and state of the cluster. It is highly available and persistent, ensuring that Kubernetes can recover the cluster's state even after a failure. All cluster data, including the desired state, nodes, and secrets, are stored here.     
+     etcd ensures consistency across the entire cluster.
+     
+	 
+     KUBE-SCHEDULER:     
+     The scheduler watches for newly created pods that have no assigned node and assigns them to a node based on resource availability, constraints, and policies.     
+     It ensures that workloads are distributed across nodes in an efficient and optimal manner.
+     
+     
+	 KUBE-CONTROLLER-MANAGER:     
+     The controller manager is responsible for ensuring that the cluster's desired state is maintained. It runs various controllers (e.g., replication controllers, deployment controllers) that monitor the state of the system and take action if the current state does not match the desired state.     
+     Example controllers include replica set controllers, deployment controllers, and node controllers.
+     
+     CLOUD-CONTROLLER-MANAGER (OPTIONAL):     
+     This component is used when running Kubernetes in a cloud environment. It interacts with the underlying cloud provider (e.g., AWS, AZURE , Google Cloud) to manage resources like load balancers, volumes, and instances.
+     
+     It helps in maintaining cloud-specific services in coordination with Kubernetes.
+     
+	 
+2. WORKER NODE COMPONENTS:
+===========================
+
+     A Worker Node (also called a Minion) runs the applications and workloads in the form of Pods. Each worker node contains the following components:
+     
+     KUBELET:     
+     The kubelet is an agent running on each worker node that ensures the containers within the pods are running and healthy.     
+     It communicates with the API server to report the status of the node and its pods.     
+     The kubelet ensures that containers are running as specified in the pod's configuration and takes action to rectify any issues (e.g., restarting a failed container).
+     
+	 
+     KUBE-PROXY:     
+     The kube-proxy manages networking for the Kubernetes cluster, providing networking services such as load balancing, service discovery, and routing traffic to the right pod.     
+     It helps route requests to the correct pod and maintains network rules to manage incoming and outgoing traffic.
+     
+     CONTAINER RUNTIME (DOCKER/ cri-o / containerd)      
+     The container runtime is responsible for running the containers inside a pod. Kubernetes supports various runtimes, but Docker was the default (although Kubernetes is moving toward containerd and other runtimes).
+     
+     It pulls container images, starts containers, and manages the lifecycle of containers within the pods.
+	 
+     
+     PODS:     
+     Pods are the smallest deployable units in Kubernetes and can contain one or more containers.     
+     A pod represents a single application instance, and all containers within the pod share the same network namespace, storage volumes, and lifecycle.     
+     Pods can be scaled up or down by the Kubernetes scheduler, and they are ephemeral (they may be replaced or rescheduled on different nodes).
+
+
+=============================================================================================
+
+SOFTWARES:  eksctl , kubectl , aws cli , visualstudo code 
+
+1. chacolety 
+------------------------
+2. eksctl -- CLUSTER CREATION 
+$ eksctl version
+0.207.0
+---------------------
+
+3. kubectl -- CLI TO INTERACT WITH CLUSTER ( API SERVER) 
+kubectl version --client
+Client Version: v1.32.0-eks-5ca49cb
+Kustomize Version: v5.5.0
+------------------------------
+
+4. AWS CLI 
+ aws --version
+aws-cli/2.23.9 Python/3.12.6 Windows/11 exe/AMD64
+
+
+5. visual studio code  (IDE ) 
+   - For syntax auto suggestions / syntax auto completion 
+   - easy to manage the code / script 
+
+============================
+
+Installing on linux machine :: 
+
+kubectl & eksctl installation on aws linux machine 
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+
+
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+
+============================================================
+
+Treditional approach - Self managed , barematel , customer managed k8s cluster 
+
+Kubernetes Control Plane - Self Managed  
+   Need to make Control Plane Highly Available
+   Maintain multiple EC2 in multiple AZ
+   Scale Control Plane if needed
+   Keep etcd up and running
+   Overhead of managing EC2s
+   Security Patching
+   Replace failed EC2s/vms/physical servers
+   Orchestration for Kubernetes Version Upgrade
+-------------------------------------------------------
+   
+CLOUD MANAGED KUBERNETES ( EKS / AKS / GKE ) 
+
+Kubernetes Control Plane - AWS Managed - eks
+
+AWS Manages Kubernetes Control Plane
+Amazon Elastic Kubernetes Service : 
+● AWS maintains High Availability - Multiple EC2s in Multiple AZs
+● AWS Detects and Replaces Unhealthy Control Plane Instances
+● AWS Scales Control Plane
+● AWS Maintains etcd
+● Provides Automated Version Upgrade and Patching
+
+
+EKS K8S CLUSTER SETUP 
+
+------------------
+Software installations :
+
+1. VISUAL STUDIO CODE -- IDE 
+   writing a manifest files ( kubernetes obeject definition file in yaml format) 
+    Using IDE ( integrated developement environment) - Microsoft visual studio code 
+	
+	
+ADDING	 ---- yaml extension :
+	----------------------------
+	    "yaml.schemas": {
+    
+    
+      "kubernetes": "*.yaml"  
+    
+    },
+	---------------------------------
+
+--------------------------------------
+CLUSTER  OPTIONS :
+
+
+Ways To Spin Up EKS Cluster:
+
+           
+           eksctl CLI
+          
+		   
+--------------------------
+Tools:
+        Local PC  terminal (Using AWSCLI & aws configure )
+	
+           AWS Cloud9  (Terminal)
+         Amazon EC2   (Command Line)		 
+	   
+=======================	   
+aws configure
+
+Accesskey 
+Secret Access key 
+---
+AKIAQGYBxxxxxxxxxx
+w1Ub+RhBsWQ0By/Jvxxxxxxxxxxxxxxxxxxxx
+
+1. awscli & configufre 
+aws sts get-caller-identity
+
+once configure is done , our terminal will have admin accss to our aws account 
+==========================
+
+
+=======================
+What is eksctl - CloudFormation stack
+  
+
+● CLI tool for creating clusters on EKS
+● Easier than console
+● Abstracts lots of stuff - VPC, Subnet, Sec. Group , nodes , docker etc.
+using CloudFormation stack 
+
+----------------
+
+=======================================================
+eksctl create cluster  --> it creates  two m5.large large nodes by default for data plane . Insted go for t3.micro
+
+Control Plane - AWS WILL TAKE CARE ! --> $O.10 bill for control plane
+Data Plane  - 2 m5.large (
+----------------------------------------------------
+eksctl create cluster --name <name> --version <> --nodegroup-name <> --node-type t3.micro --nodes 4 --managed 
+
+
+eksctl create cluster --name b15dcluster  --nodegroup-name b15ng --node-type t3.micro --nodes 4 --managed 
+
+eksctl get cluster 
+eksctl delete cluster <clustername> 
+=============================================================
+
+eksctl Commands
+
+eksctl create cluster   
+------ Create EKS Cluster with one nodegroup containing 2 m5.largenodes
+
+eksctl create cluster --name <name> --version <> --nodegroup-name <> --node-type t3.micro --nodes 4 --managed 
+
+-------------------
+A node group is a collection of worker nodes (EC2 instances) within a Kubernetes cluster that share the same configuration — such as instance type, AMI, and scaling settings.
+
+-----------------------------------------
+eksctl create cluster --name b15cluster --nodegroup-name b15ng --node-type t3.micro --nodes 2 --managed
+
+----------
+2024-11-07 19:03:13 [ℹ]  waiting for CloudFormation stack "eksctl-b15cluster-cluster"
+:
+:
+2024-11-07 19:34:33 [ℹ]  waiting for CloudFormation stack "eksctl-b15cluster-nodegroup-b15ng"
+:
+:
+2024-11-07 19:37:57 [ℹ]  nodegroup "b15ng" has 4 node(s)
+2024-11-07 19:37:57 [ℹ]  node "ip-192-168-1-245.ec2.internal" is ready
+2024-11-07 19:37:57 [ℹ]  node "ip-192-168-30-5.ec2.internal" is ready
+2024-11-07 19:37:57 [ℹ]  node "ip-192-168-48-160.ec2.internal" is ready
+2024-11-07 19:37:57 [ℹ]  node "ip-192-168-52-207.ec2.internal" is ready
+2024-11-07 19:37:57 [✔]  created 1 managed nodegroup(s) in cluster "b15cluster"
+2024-11-07 19:38:01 [ℹ]  kubectl command should work with "C:\\Users\\Dell\\.kube\\config", try 'kubectl get nodes'
+2024-11-07 19:38:01 [✔]  EKS cluster "b15cluster" in "us-east-1" region is ready
+
+
+--------------------------------
+CONTROL PLANE (MASTER NODES) :
+
+Kubernetes master nodes are distributed across several AWS availability zones (AZ), and traffic is managed by Elastic Load Balancer (ELB).
+
+EKS is a managed service, so you have no direct access to the master nodes. And you don't need the access.
+==================================
+
+pod - Containers are encapsulated into a k8s object called pod ,in simple words pod is a abstraction on containers 
+
+Pod can have multiple continers but in general not of same container type (mostly helper container) 	
+
+--------------------------------------------
+Creating a POD from Commandline : 
+
+docker run --name cont1 iname 
+kubectl run pod1 --image=tomcat
+
+=====================
+docker run -it --name cont1 iname 
+kubectl run pod1 --image=tomcat
+
+kubectl cluster-info
+kubectl cluster-info --dump
+=================================================================
+
+kubectl run test1k8s --image=tomcat
+
+kubectl get pods
+kubectl get pods -o wide 
+kubectl delete pod testk8s
+
+
+==========================================================================================
+
+yaml - one of the data structure format to represent data 
+       yaml file is used to represent data , in our case k8s object configuration data
+
+for ex : 
+
+server details :
+
+name = fbserver 
+owner = Madhu
+created = 11-4-2025 
+status = active 
+
+name = instasever
+owner = kiran
+created = 11-4-2025 
+status = active 
+
+
+--- show above server data as xml , yaml and json format 
+
+-----------------------------------
+key value pair - 
+
+name: server1
+
+-------------------
+Array/ List :
+
+Fruits:
+- grape 
+- banana
+- Orange: 
+    Calories: 50
+	Fat: 0.1 g
+    Carbs: 5g   
+
+    
+- apple
+    Fat: 0.1 g
+    Carbs: 5g
+    Calories: 50
+    
+    
+-------------------
+
+Dictionary - Set of properties , grouped together
+
+Orange: 
+   Calories: 50
+   Fat: 0.1 g
+   Carbs: 5g
+   
+   
+make sure we are giving spaces properly 
+ - equal no of spaces   
+----------------------------------------
+
+cat fbpod1.yaml
+
+
+fbpod1.yaml
+---------------------------
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fbpod
+  labels:
+    app: facebook
+    env: lab 
+spec:
+  containers:
+    - name: fbcont
+      image: tomcat
+
+=======================================
+
+kubectl get pod
+kubectl describe pod fbpod
+kubectl get po
+kubectl delete pod fbpod
+kubectl get po
+
+=======================================================================================
+REPLICA SET: 
+
+spec : we will create a template section under spec to provide a pod template to be used by Replication contoller/ Relica set to create replicas 
+
+
+Replication Controller vs Replica set :
+
+   Replica set requires a selector defination 
+   i,e 
+   seletor is not mandate for RC ,
+   but for Replica set it is mandate , a user input is required for this property like match labels 
+
+
+FOR REEPLICA SET manifest files ---> -
+check for  manifest files in zip folder
+
+=======================================================================================
+DATE: 14 APR 24
+
+--------
+kubectl run pod nginx --image nginx:latest --dry-run -o yaml 
+
+--------
+kubectl create deployment instadeploy --image=devopshubg333/batch15d:mcappimag --replicas=3 --dry-run -o yaml
+
+--------
+kubectl explain pods ---> gives explaination of pods manifest files 
+
+--------
+kubectl explain pods.metadata
+
+--------
+kubectl cluster-info dump ---> total cluster info
+
+--------
+
+kubectl api-resources --->resorces we can create like podscontainers,deployments...etc
+
+kubectl api-resources | grep pod 
+--------
+kubectl cordon instance ip ---> unschedule the nodes ,no new pod will be schedule
+Marks a node as unschedulable—new pods will not be scheduled on it, but existing pods continue to run.. 
+when You want to stop placing new workloads on the node but don't want to disrupt what's already running.
+--------
+
+kubectl drain ip-172-20-103-135.ec2.internal --->  evicts all pods to another node and schedule will be disable
+--------
+kubectl uncordon ip-172-20-38-30.ec2.internal
+
+
+kubectl get all 
+==========================		
+kubectl get replicaset
+NAME     DESIRED   CURRENT   READY   AGE
+tomcat   5         5         5       116s
+-----------
+
+So Why do we need labels and Selectoers ?
+
+Labels can be used as filter to replica set , so replica set will monitor and ensure desired no of pods are running 
+
+==========================================================
+scale replicas and ways to scale :
+
+1. kubectl scale replicaset fb-rs --replicas=3
+1. Change manifest file -->- then kubectl apply -f replicaset.yaml
+3. kubectl scale --replicas=6 -f replicaset.yaml
+4. kubectl edit replicaset <replicasetname> --> opens a temporoay file in memory
+
+
+=====================================================================
+
+To create a deployment using imperative command, use kubectl create:
+
+kubectl create deployment nginx --image=nginx
+
+kubectl create deployment instadeploy --image=<image> --replicas=3 --dry-run -o yaml
+--------------------------------------------------------
+
+
+cat 1-deploy_AC_V1.yaml
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fb-deploy
+  labels:
+    app: facebook
+    env: lab 
+
+spec:
+  selector:
+    matchLabels:
+      app: facebook
+  replicas: 3  
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+  template:
+    metadata:
+      name: fbpod
+      labels:
+        app: facebook
+        env: lab 
+        Version: AC_V1
+    spec:
+      containers:
+        - name: fbcont1
+          image: devopshubg333/batch15d:mcfbapp
+          ports:
+            - containerPort: 80
+      
+====================
+kubectl apply -f 02-DEPLOYMNET-PRACTICE/1-deploy_AC_V1.yaml
+
+==================================================================
+
+cat 2-deploy_VC_v2.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fb-deploy
+  labels:
+    app: facebook
+    env: lab 
+
+spec:
+  selector:
+    matchLabels:
+      app: facebook
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+  template:
+    metadata:
+      name: fbpod
+      labels:
+        app: facebook
+        env: lab 
+        Version: VC_V2
+    spec:
+      containers:
+        - name: fbcont1
+          image: devopshubg333/batch15d:python_flaskapp
+          ports:
+            - containerPort: 80
+      
+==============
+kubectl apply -f 02-DEPLOYMNET-PRACTICE/1-deploy_AC_V1.yaml
+kubectl apply -f 02-DEPLOYMNET-PRACTICE/2-deploy_VC_v2.yaml
+
+ kubectl get deployment
+
+------------
+
+ kubectl get all
+ kubectl describe deploy fb-deploy
+ kubectl get deploy
+ kubectl get po --watch
+ kubectl get all
+ kubectl rollout history deploy fb-deploy
+ kubectl describe deploy fb-deploy
+ kubectl rollout unpause deploy fb-deploy
+ kubectl rollout resume deploy fb-deploy
+ kubectl rollout undo deploy fb-deploy
+ kubectl describe deploy fb-deploy
+
+kubectl create deployment instadeploy --image=devopshubg333/batch15d:mcappimag --replicas=3 --dry-run -o yaml
+
+=============================================================================
+kubectl get po --watch 
+kubectl rollout history deploy fbdeploy
+
+kubectl get rs 
+==========================================================
+kubectl rollout pause deploy fbdeploy
+ deployment.apps/fbdeploy paused
+
+====================
+kubectl rollout resume deploy fbdeploy
+ deployment.apps/fbdeploy resumed
+
+===================
+kubectl rollout undo deploy fbdeploy
+deployment.apps/fbdeploy rolled back
+==========================================
+
+kubectl rollout history deploy fbdeploy
+
+
+======================
+
+SERVICES:
+
+
+ cat 1-deploy.yaml 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-deploy
+  labels:
+     app: httpd
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: httpd
+
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      containers:
+      - name: httpd-ctr
+        image: httpd
+        ports:
+        - containerPort: 80
+		
+		
+	===================================================	============
+cat lb-svc.yaml 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-lb
+  labels:
+     app: httpd
+
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP 
+  selector:
+    app: httpd
+				
+		
+		===========================================================================
+		
+		
+cat cluster-ip.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-cip-svc
+  labels:
+     app: httpd
+
+spec:
+  type: ClusterIP
+  ports:
+  - port: 82
+    targetPort: 80
+    protocol: TCP 
+  selector:
+    app: httpd
+
+===================================================================
+cat nodeport.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-nodesvc
+  labels:
+     app: httpd
+
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 31009
+	targetPort: 80
+    protocol: TCP 
+  selector:
+    app: httpd
+
+==========================
+NameSpaces :
+
+Namespaces are Kubernetes objects which partition a single Kubernetes cluster into multiple virtual clusters. Each Kubernetes namespace provides the scope for Kubernetes Names it contains; which means that using the combination of an object name and a Namespace, each object gets an unique identity across the cluster.
+==============
+
+kubectl get pod -o wide
+kubectl get pod -o wide --all-namespaces
+
+=================================
+
+kubectl get ns
+
+kubectl create ns kirannamespace
+
+kubectl create -f pod.yaml -n kirannamespace
+
+kubectl get pods --all-namespaces
+============================
+================
+
+DATE: 18 APR 2025
+
+resource requests & limits :
+
+Resource Requests
+A request is the amount of CPU and memory that Kubernetes will allocate to a container. When you specify a request, Kubernetes ensures that your container will always have at least that much resource available when it runs
+
+------------
+LIMITS : 
+The maximum amount of CPU and memory the container can use. 
+If the container exceeds these, it may be throttled (CPU) or killed (Memory).
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+  - name: example-container
+    image: nginx
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "128Mi"
+      limits:
+        cpu: "1"
+        memory: "256Mi"
+
+
+==========================================================================
+how to log into the pod ? 
+
+kubect exec -it <podname> -- /bin/bash
+kubect exec -it <podname> -- env
+
+----------------------
+
+ENV vs CONFIG MAP vs  SECRET 
+
+Environment Variables (ENV):
+
+Key-value pairs injected directly into pod/containers.
+App configs like port numbers, feature flags, etc.
+Env variables are Typically non-sensitive.
+Not encrypted.
+Easily visible in kubectl describe pod.
+
+=====================
+
+ENV:
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: environment
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    env:
+      - name: course
+        value: aws devops
+      - name: trainer
+        value: "Madhu kiran Gorekar"
+      - name: Institute 
+        value: MindCircuit 
+
+=====================
+Secrets and ConfigMaps are objects used to manage configuration data, sensitive information, and non-sensitive application settings in a secure and organized manner. They allow you to decouple configuration from application code, making it easier to manage and update configurations in a Kubernetes cluster.
+
+A ConfigMap is used to store non-sensitive, configuration-related data in the form of key-value pairs. 
+
+ex: environment variables, configuration files, or command-line arguments
+
+
+configmap.yaml:
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  course: aws devops
+  trainer: Madhukirna gorekar
+  Institute: Mindcircuit
+  
+========================  
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-config
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    envFrom:
+    - configMapRef:
+        name: nginx-config
+
+===========================================
+A Secret is used to store sensitive data, such as passwords, OAuth tokens, SSH keys, and API keys, in a way that is more secure than using a plain ConfigMap. Secrets are encoded (base64), which helps to obscure their content but is not a fully secure solution; they are more secure than environment variables or plain text files
+
+
+encode:
+
+
+echo -n "Aws DevOps" | base64  ---------> QXdzIERldk9wcw==
+echo -n "Madhukiran Gorekar" | base64  ----> TWFkaHVraXJhbiBHb3Jla2Fy
+echo -n "MindCircuit" | base64      -----> TWluZENpcmN1aXQ=
+
+
+
+
+decode:
+echo -n "QXdzIERldk9wcw==" | base64 --decode
+echo -n "TWFkaHVraXJuYSBnb3Jla2Fy" | base64 -d
+==================================
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pod-secret
+type: Opaque
+data:
+  course: YXdzIGRldm9wcw==
+  trainer: TWFkaHVraXJuYSBnb3Jla2Fy
+
+
+============================
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-secret
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    envFrom:
+    - secretRef:
+        name: pod-secret
+
+=================================================================
+
+
+kubectl get secret 
+
+------------------------------------------------
+CLUSTER UPGRADE in K8S 
+
+======================================
+
+=============================
+LABELS vs ANNOTATIONS in K8S 
+
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fbpod
+  labels:
+    app: facebook
+	env: lab
+	
+  annotations:
+    imageregistry: "https://hub.docker.com/"
+    build-url: "https://jenkins.example.com/build/142"
+	prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+	
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+
+
+
+
