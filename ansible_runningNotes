@@ -202,126 +202,187 @@ make sure we are giving spaces properly
  - equal no of spaces 
 ===========
 
-
-
-ansible -i /opt/inventory all -m yum -b -a "name=git state=present" 
-
-ansible -i /opt/inventory all -m yum -b -a "name=httpd state=present" 
-
-ansible -i /opt/inventory all -m service -b -a "name=httpd state=started" 
-
-ansible -i /opt/inventory all -m copy -b -a "src=/opt/index.html dest=/var/www/html/index.html" 
-
-[ec2-user@master playbooks]$ cat playbook1.yaml
+sudo vim play1.yaml
+----------------------------
 ---
-- name: Install Git , httpd  and deploy the application
-  hosts: all
+- hosts: all
   become: yes
-  gather_facts: no
-
-
   tasks:
-   - name: Install Git
-     yum:
-       name: git
-       state: present
+  - name: Installing git package
+    yum: 
+	  name: git 
+	  state: present
 
-   - name: Install httpd
-     yum:
-       name: httpd
-       state: present
-
-   - name: Start httpd service
-     service:
-       name: httpd
-       state: started
-     tags: service_httpd
-
-   - name: httpd status
-     shell: service httpd status
-     register: service_status_op
-     tags: service_httpd
-
-   - name: Display service status
-     debug:
-       var: service_status_op
-     tags: service_httpd
-
-   - name: Deploy the index.html
-     copy:
-       src: /opt/index.html
-       dest: /var/www/html/index.html
-     tags: deploy_code
-
-=============================
-sudo yum update –y
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-sudo yum upgrade
-sudo dnf install java-17-amazon-corretto -y
-sudo yum install jenkins -y
-sudo systemctl enable jenkins
-sudo systemctl start jenkins
-sudo mount -o remount,size=4G /tmp/
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-
-====================
-
-[ec2-user@master playbooks]$ cat jenkins_setup.yaml
+:wq!
+============================
 ---
-- name: Install Jenkins using service module
-  hosts: appservers
+- hosts: all
   become: yes
-
   tasks:
-    - name: Update all packages
+  - name: Installing git package
+    yum: 
+      name: git
+      state: present
+
+
+
+ansible-playbook play1.yaml
+
+
+===============
+
+vim httpd.yaml :
+
+---> check class notes 
+
+
+
+===========================================================
+
+
+
+
+
+
+
+sudo vim play6.yml
+-------------------------------
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Installing no.of package
+    yum: name=git,httpd,wget,java state=present
+
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: removinfg  no.of package
+    yum: name=git,httpd,wget,java  state=present  
+
+or
+
+sudo vim play7.yml
+-------------------------------
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Installing no.of packages
+    yum: state=present name={{item}}
+    with_items:
+    - git
+    - httpd
+    - wget
+	- java
+	- xyx 
+	- abc 
+
+---------------------
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install necessary packages
       yum:
-        name: "*"
-        state: latest
-
-    - name: Add Jenkins repo
-      get_url:
-        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
-        dest: /etc/yum.repos.d/jenkins.repo
-
-    - name: Import Jenkins GPG key
-      rpm_key:
-        key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+        name: "{{ item }}"
         state: present
+      loop:
+        - git
+        - httpd
+        - wget
+        - java
+        - xyz
+        - abc
+      tags:
+        - install_packages
 
-    - name: Upgrade all packages
-      yum:
-        name: "*"
-        state: latest
+###    
+{{ item }} is a special kind of variable used in loops in Ansible.
 
-    - name: Install Java 17 (Amazon Corretto)
-      dnf:
-        name: java-17-amazon-corretto
-        state: present
 
-    - name: Install Jenkins
-      yum:
-        name: jenkins
-        state: present
+===========================
+Jinja2 templating syntax 
 
-    - name: Enable Jenkins service
-      service:
-        name: jenkins
-        enabled: yes
+TEMPLATE module 
 
-    - name: Start Jenkins service
-      service:
-        name: jenkins
-        state: started
+===================
 
-    - name: Get Jenkins initial admin password
-      command: cat /var/lib/jenkins/secrets/initialAdminPassword
-      register: jenkins_password
-      changed_when: false
 
-    - name: Display Jenkins initial admin password
-      debug:
-        msg: "Jenkins initial admin password is: {{ jenkins_password.stdout }}"
 
-[ec2-user@master playbooks]$
+HOW TO DO CONF AUTOMATION ON  MASTERSERVER IN ANSBLE CONTROL 
+
+
+=======================================
+ANSIBLE HANDLERS 
+
+
+======================
+
+ANSIBLE VARIABLES 
+
+===============
+
+ANSIBLE ROLES :
+
+your_role_name/
+├── defaults/
+│   └── main.yml          # Default variables (lowest priority)
+├── vars/
+│   └── main.yml          # Variables with higher priority
+├── files/
+│   └── ...               # Static files to copy (e.g., config files, packages)
+├── templates/
+│   └── ...               # Jinja2 templates (e.g., .j2 files)
+├── tasks/
+│   └── main.yml          # Main list of tasks to run
+├── handlers/
+│   └── main.yml          # Handlers triggered by tasks (e.g., service restart)
+├── meta/
+│   └── main.yml          # Role metadata (dependencies, author info)
+├── README.md             # Documentation (optional but recommended)
+└── tests/
+    └── test.yml          # Test playbook to verify role
+
+
+=============
+
+Modularization	
+        Breaks down playbooks into smaller, reusable, and independent units of configuration.
+		
+Reusability	
+          Roles can be reused across different playbooks or projects, reducing duplication.
+		  
+Maintainability	
+         Makes it easier to maintain and update configurations by organizing them into distinct sections.
+		 
+Scalability	
+            Helps manage complex systems and scale automation as infrastructure grows.
+Collaboration	
+          Provides a clear structure that improves team collaboration by dividing tasks into specific roles.
+
+
+
+==============================================
+
+ROLES:
+
+sudo ansible-galaxy init <rolename>
+cd <rolename> 
+	
+---
+- hosts: all 
+  become: yes 
+  roles:
+    - {role: httpdrole}
+	- {role: tomcatrole} 
+	
+
+============================================
+
+
+======
+
+
 
