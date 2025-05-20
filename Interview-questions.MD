@@ -5,7 +5,7 @@ dmesg | grep -i "killed process"
 # 2.	Q:  Write code for CPU and RAM utilization using Python?
 import psutil
 
-CPU usage
+* CPU usage
 cpu_percent = psutil.cpu_percent(interval=# 1)
 print(f"CPU Usage: {cpu_percent}%")
 
