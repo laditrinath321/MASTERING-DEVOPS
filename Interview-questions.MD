@@ -1,4 +1,5 @@
 # 1.Q: Have you ever come across a situation where a process in Linux is automatically killed?
+
 Yes, this typically happens when the system runs out of memory. The OOM Killer (Out Of Memory Killer) in Linux terminates processes to free up RAM. You can check this using:
 dmesg | grep -i "killed process"
 
@@ -428,7 +429,7 @@ Answer:
 Use ternary operator:
 variable "env" {}
 output "instance_type" {
-  value = var.env == "prod" ? "t# 3.large" : "t# 2.micro"
+  value = var.env == "prod" ? "t3.large" : "t2.micro"
 }
 
 
@@ -441,7 +442,7 @@ Answer:
 
 # 57. What is Maven lifecycle?
 Answer:
-Maven has # 3 built-in lifecycles:
+Maven has 3 built-in lifecycles:
 •	clean – cleans previous build (mvn clean)
 •	default – main build (compile, test, package, install, deploy)
 •	site – generates documentation
@@ -454,10 +455,10 @@ mvn install -Dmaven.test.skip=true
 
 # 59. Difference between Maven, Ant, and Jenkins?
 Answer:
-Tool	Purpose	Key Feature
-Maven	Build tool	Convention over configuration
-Ant	Build tool	Procedural (manual steps)
-Jenkins	CI/CD automation	Executes pipelines, integrates tools
+Tool Purpose Key Feature
+Maven Build tool Convention over configuration
+Ant	Build tool Procedural (manual steps)
+Jenkins	CI/CD automation Executes pipelines, integrates tools
 ________________________________________
 # 60. What are Kubernetes namespaces?
 Answer:
@@ -499,7 +500,7 @@ Starts with #!, tells the system which interpreter to use. Example:
 # 67. How can you modify permissions in Linux?
 Answer:
 Use chmod:
-chmod # 755 file.sh
+chmod 755 file.sh
 Use chown to change ownership:
  chown user:group file
 
@@ -512,7 +513,7 @@ Answer:
 # 69. How can you kill a process in Linux?
 Answer:
 kill <PID>
-kill -# 9 <PID>       # force kill
+kill -9 <PID>       # force kill
 
 # 70. How can you check CPU utilization?
 Answer:
@@ -523,17 +524,17 @@ mpstat
 
 # 71. How can you check if a port is open and listening?
 Answer:
-netstat -tuln | grep # 80
-ss -tuln | grep # 80
+netstat -tuln | grep 80
+ss -tuln | grep 80
 
 # 72. How can you check if the network is working using traceroute?
 Answer:
 traceroute google.com
 It shows the path and delays to the destination.
 
-# 73. How can you capture last # 20 lines of a file?
+# 73. How can you capture last 20 lines of a file?
 Answer:
-tail -n # 20 filename.log
+tail -n 20 filename.log
 
 # 74. What are the features of Jenkins?
 Answer:
@@ -599,15 +600,15 @@ A: I check disk usage with df -h and identify large files or directories using d
 
 # 83. If you are getting an SSH error, what do you do?
 Q: How do you troubleshoot SSH connection issues?
-A: I check network reachability using ping or telnet, confirm correct IP, key permissions (chmod # 400 for PEM), verify SSH service status, and review /var/log/auth.log or /var/log/secure. I also confirm the security group/firewall allows port # 22.
+A: I check network reachability using ping or telnet, confirm correct IP, key permissions (chmod # 400 for PEM), verify SSH service status, and review /var/log/auth.log or /var/log/secure. I also confirm the security group/firewall allows port 22.
 
 # 84. Difference between ALB and NLB?
 Q: What’s the difference between Application Load Balancer (ALB) and Network Load Balancer (NLB)?
-A: ALB works at Layer # 7 (HTTP/HTTPS), supports path-based routing, host-based routing, and WebSockets. NLB works at Layer # 4 (TCP/UDP), is faster and handles millions of requests with low latency. Use ALB for web apps, NLB for performance-critical TCP services.
+A: ALB works at Layer 7 (HTTP/HTTPS), supports path-based routing, host-based routing, and WebSockets. NLB works at Layer 4 (TCP/UDP), is faster and handles millions of requests with low latency. Use ALB for web apps, NLB for performance-critical TCP services.
 
-# 85. How can you recover a deleted S# 3 object?
-Q: How do you restore a deleted S# 3 object?
-A: If versioning was enabled, I can retrieve the deleted object using a previous version. Without versioning, the object is permanently deleted unless S# 3 backup (e.g., replication or lifecycle rule to Glacier) is configured.
+# 85. How can you recover a deleted S3 object?
+Q: How do you restore a deleted S3 object?
+A: If versioning was enabled, I can retrieve the deleted object using a previous version. Without versioning, the object is permanently deleted unless S3 backup (e.g., replication or lifecycle rule to Glacier) is configured.
 
 # 86. How do you differentiate between a public and a private subnet in AWS?
 Q: How do you identify a public vs private subnet?
@@ -624,13 +625,13 @@ hcl
 CopyEdit
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
-  version = "# 3.# 0.# 0"
+  version = "3.0.0"
   ...
 }
 
 # 89. What are modules in Terraform?
 Q: Why do you use modules in Terraform?
-A: Modules group and reuse Terraform configurations, promoting clean and DRY code. They help manage large infrastructure by encapsulating resources like VPCs, EC# 2s, or databases into logical components.
+A: Modules group and reuse Terraform configurations, promoting clean and DRY code. They help manage large infrastructure by encapsulating resources like VPCs, EC2s, or databases into logical components.
 
 # 90. How can you pass passwords securely in Terraform?
 Q: How do you handle sensitive values like passwords in Terraform?
@@ -641,15 +642,15 @@ Q: What’s the difference between CMD and ARG in Docker?
 A: ARG defines variables at build-time, while CMD provides defaults for runtime. Example:
 dockerfile
 CopyEdit
-ARG VERSION=# 1.# 0
+ARG VERSION=1.0
 CMD ["node", "app.js"]
 
 # 92. How do you secure Docker images?
 Q: What steps do you take to secure Docker images?
 A: I use minimal base images (like Alpine), scan images with tools like Trivy or Docker Scout, avoid hardcoding secrets, use .dockerignore, and sign images using Docker Content Trust or Notary.
 
-# 93. How do you secure a # 3-tier architecture?
-Q: How do you secure a # 3-tier app (web, app, DB)?
+# 93. How do you secure a 3-tier architecture?
+Q: How do you secure a 3-tier app (web, app, DB)?
 A: I use security groups and NACLs to isolate layers:
 •	Web tier: Public subnet with limited inbound (HTTP/HTTPS).
 •	App tier: Private subnet, allows traffic only from web tier.
@@ -662,11 +663,11 @@ A: I use a Service of type LoadBalancer or Ingress. For complex routing and HTTP
 
 # 95. How do you connect Jenkins to the cloud (AWS)?
 Q: How do you connect Jenkins to cloud environments like AWS?
-A: I configure Jenkins with AWS CLI/SDK or IAM credentials (via credentials plugin). I install plugins like AWS EC# 2, use IAM roles (on EC# 2 agents), and store secrets in AWS Secrets Manager or Jenkins credentials.
+A: I configure Jenkins with AWS CLI/SDK or IAM credentials (via credentials plugin). I install plugins like AWS EC2, use IAM roles (on EC2 agents), and store secrets in AWS Secrets Manager or Jenkins credentials.
 
 # 96. How many VPCs can you create per region?
 Answer:
-By default, you can create # 5 VPCs per region per AWS account. This limit can be increased by requesting a quota increase from AWS.
+By default, you can create 5 VPCs per region per AWS account. This limit can be increased by requesting a quota increase from AWS.
 
 # 97. What is the difference between a private and public subnet?
 Answer:
@@ -683,7 +684,7 @@ VPC Peering allows direct communication between two VPCs in the same or differen
 
 # 100. What is a VPC Endpoint?
 Answer:
-A VPC Endpoint allows private connection between your VPC and AWS services (like S# 3, DynamoDB) without using the internet, improving security and performance.
+A VPC Endpoint allows private connection between your VPC and AWS services (like S3, DynamoDB) without using the internet, improving security and performance.
 
 # 101. How can you restore an RDS snapshot with a custom database name?
 Answer:
@@ -692,9 +693,9 @@ You cannot directly rename a database when restoring a snapshot. Instead:
 # 2.	Create a new DB instance.
 # 3.	Use tools like pg_dump/mysqldump, or AWS DMS to export and import data into a DB with the desired name.
 
-# 102. How can you create an HTTPD application on # 100 EC# 2 instances using an Ansible playbook?
+# 102. How can you create an HTTPD application on 100 EC2 instances using an Ansible playbook?
 Answer:
-•	Define the inventory of # 100 EC# 2 instances.
+•	Define the inventory of 100 EC2 instances.
 •	Write a playbook to install and start HTTPD:
 yaml
 ---
@@ -724,7 +725,7 @@ Answer:
 
 # 104. How can you connect S3 to an EC2 instance?
 Answer:
-•	Attach an IAM Role to EC2 with S# 3 access permissions (e.g., AmazonS# 3ReadOnlyAccess).
+•	Attach an IAM Role to EC2 with S3 access permissions (e.g., AmazonS# 3ReadOnlyAccess).
 •	Use AWS CLI or SDK on EC# 2:
 aws s3 ls s3://your-bucket-name
 
