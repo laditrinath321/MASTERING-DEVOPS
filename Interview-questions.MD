@@ -1,4 +1,4 @@
-# 1.	Q: Have you ever come across a situation where a process in Linux is automatically killed?
+# 1.Q: Have you ever come across a situation where a process in Linux is automatically killed?
 Yes, this typically happens when the system runs out of memory. The OOM Killer (Out Of Memory Killer) in Linux terminates processes to free up RAM. You can check this using:
 dmesg | grep -i "killed process"
 
@@ -928,3 +928,17 @@ Ensures that a copy of a pod runs on all (or selected) nodes.
 Use cases:
 •	Log collection (e.g., Fluentd)
 •	Monitoring agents (e.g., Prometheus Node Exporter)
+
+# 131. What is the SLA of each and every incident in your current organisation
+#A:
+In our organisation we have 4 types of incidents based on priority and urgency i.e., P1, P2, P3, P4
+The SLA is 2, 8, 72 and 96 hours respectively.
+
+# 132. Did you ever be involved in change management, what is the process of creating CRQ's in your current organisation ?
+Regarding change management, we generally raise a change when ever there is some configuration or patching is being done on production environment servers. 
+We have to raise a change and get in approved in CAB (Change Advisory Board) call. In CAB meeting we discuss the potential risks and dependencies involved to implement the change and all the respective stakeholders holders or teams linked to that change are informed about the activity. Later it should be approved by manager or team lead, the multiple level of approvals depends on individual teams and organisations.
+
+# 133. Do you have any idea about the prod and pre pod environment.
+Prod environment is generally production environment, this is what the end consumers get to see, like all the websites and links that we usually get accesses like bank websites, Flipkart and Amazon apps
+
+Pre prod environment is where all the testing is done before going live in production environment. If everything goes well in Pre prod then we push the updates and patches to production environment.
