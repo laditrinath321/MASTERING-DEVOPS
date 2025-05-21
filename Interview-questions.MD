@@ -1,9 +1,9 @@
-# 1.Q: Have you ever come across a situation where a process in Linux is automatically killed?
+#### 1.Q: Have you ever come across a situation where a process in Linux is automatically killed?
 
 Yes, this typically happens when the system runs out of memory. The OOM Killer (Out Of Memory Killer) in Linux terminates processes to free up RAM. You can check this using:
 dmesg | grep -i "killed process"
 
-# 2.Q:  Write code for CPU and RAM utilization using Python?
+### 2.Q:  Write code for CPU and RAM utilization using Python?
 import psutil
 # CPU usage
 cpu_percent = psutil.cpu_percent(interval=# 1)
@@ -12,7 +12,7 @@ print(f"CPU Usage: {cpu_percent}%")
 memory = psutil.virtual_memory()
 print(f"RAM Usage: {memory.percent}%")
 
-# 3.Q: How do you read and write key-value pairs from a text.json file in Python?
+## 3.Q: How do you read and write key-value pairs from a text.json file in Python?
 import json
 # Read JSON file
 with open('text.json', 'r') as f:
@@ -26,7 +26,7 @@ data['new_key'] = 'new_value'
 with open('text.json', 'w') as f:
     json.dump(data, f, indent=# 4)
     
-# 4.Q: How can you create user groups in Linux?
+##### 4.Q: How can you create user groups in Linux?
 # Create a group
 sudo groupadd devteam
 # Add user to group
