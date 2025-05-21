@@ -5,7 +5,7 @@ dmesg | grep -i "killed process"
 
 #### 2.Q:  Write code for CPU and RAM utilization using Python?
 import psutil
-####CPU usage
+#### CPU usage
 cpu_percent = psutil.cpu_percent(interval=#1)
 print(f"CPU Usage: {cpu_percent}%")
 #### RAM usage
@@ -67,19 +67,31 @@ handlers:
       name: nginx
       state: restarted
     
-####7.Q: What is the typical directory structure of an Ansible project?
+#### 7.Q: What is the typical directory structure of an Ansible project?
 project/
+
 ├── inventory
+
 ├── playbook.yml
+
 ├── roles/
+
 │   └── webserver/
+
 │       ├── tasks/
+
 │       │   └── main.yml
+
 │       ├── handlers/
+
 │       │   └── main.yml
+
 │       ├── templates/
+
 │       ├── files/
+
 │       ├── vars/
+
 │       └── defaults/
 
 #### 8.Q: How can you set up password-less authentication in Linux using SSH?
