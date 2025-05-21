@@ -121,6 +121,20 @@ sudo yum upgrade jenkins
 sudo systemctl restart jenkins
 
 # 13. What is Jenkins Master-Slave Architecture?
+Master: The main Jenkins server that manages the overall environment — it schedules builds, handles the UI, and delegates tasks to agents.
+Slave (Agent): Remote machines that connect to the master and run the actual build/test jobs. They can be Linux, Windows, or container-based systems.
+
+How it works:
+Master receives a trigger (e.g., code push).
+Assigns the job to an available slave.
+Slave executes the job and reports back the result.
+Connection methods: SSH, JNLP, or WebSocket.
+
+Why use it?
+Load distribution
+Run jobs in parallel
+Use different environments for different jobs (e.g., Java on one, Python on another)
+
 
 # 14. What is SonarQube?
 SonarQube is a code quality and security analysis tool.
@@ -936,3 +950,100 @@ We have to raise a change and get in approved in CAB (Change Advisory Board) cal
 Prod environment is generally production environment, this is what the end consumers get to see, like all the websites and links that we usually get accesses like bank websites, Flipkart and Amazon apps
 
 Pre prod environment is where all the testing is done before going live in production environment. If everything goes well in Pre prod then we push the updates and patches to production environment.
+
+#134. What is GitHub Actions Pipeline?
+Answer:
+GitHub Actions is a CI/CD automation tool provided by GitHub. It allows you to define workflows in .github/workflows/*.yml files to automate processes like:
+Code build
+Test
+Deployment
+
+Structure:
+
+yaml
+
+name: CI Pipeline
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run build
+        run: echo "Build complete"
+		
+#135. How do you deploy from staging to preprod using CI/CD?
+Answer:
+
+Define environments: staging, preprod
+Use manual approval (environments protection rules) for preprod.
+Sample GitHub Actions deployment step:
+
+yaml
+
+jobs:
+  deploy-staging:
+    ...
+  deploy-preprod:
+    needs: deploy-staging
+    environment:
+      name: preprod
+      url: https://preprod.example.com
+    steps:
+      - name: Deploy to preprod
+        run: ./deploy.sh
+Use a deployment strategy like:
+Use if conditions to check branch or tag.
+Use environment with required reviewers in GitHub.
+
+#136. How can you run a specific task in Ansible?
+Answer:
+Use tags in the playbook:
+
+yaml
+
+tasks:
+  - name: Install Apache
+    apt:
+      name: apache2
+      state: present
+    tags: install
+Run specific task with:
+ansible-playbook site.yml --tags install
+
+#137. How do you SSH into a remote server and run a command?
+Example:
+
+ssh username@ip "ls -l /path/to/dir"
+Replace username@ip with the actual user and server IP (e.g., ubuntu@192.168.1.10).
+
+#138. Bash: How do you print the last word of a sentence?
+Question: Write a bash command to print the last word.
+
+Answer:
+
+echo "This is a sentence" | awk '{print $NF}'
+$NF = Number of Fields, i.e., last field.
+
+#139. This is incorrect syntax: Echo | awk -F ‘{pritn($NF)} — Why?
+Issue:
+
+Wrong quote characters
+pritn is a typo, should be print
+-F not needed unless using a specific delimiter
+Corrected version:
+echo "Hello world" | awk '{print $NF}'
+
+#140. Bash: Write a script to print the first word of a string
+Answer (Script):
+
+#!/bin/bash
+read -p "Enter a sentence: " sentence
+echo "$sentence" | awk '{print $1}'
+
+Usage:
+$ ./firstword.sh
+Enter a sentence: Hello from DevOps
+Hello
