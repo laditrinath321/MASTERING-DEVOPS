@@ -1,40 +1,40 @@
-################ 1.Q: Have you ever come across a situation where a process in Linux is automatically killed?
+#### 1.Q: Have you ever come across a situation where a process in Linux is automatically killed?
 
 Yes, this typically happens when the system runs out of memory. The OOM Killer (Out Of Memory Killer) in Linux terminates processes to free up RAM. You can check this using:
 dmesg | grep -i "killed process"
 
-################ 2.Q:  Write code for CPU and RAM utilization using Python?
+#### 2.Q:  Write code for CPU and RAM utilization using Python?
 import psutil
-################ CPU usage
-cpu_percent = psutil.cpu_percent(interval=################ 1)
+####CPU usage
+cpu_percent = psutil.cpu_percent(interval=#1)
 print(f"CPU Usage: {cpu_percent}%")
-################ RAM usage
+#### RAM usage
 memory = psutil.virtual_memory()
 print(f"RAM Usage: {memory.percent}%")
 
-################ 3.Q: How do you read and write key-value pairs from a text.json file in Python?
+#### 3.Q: How do you read and write key-value pairs from a text.json file in Python?
 import json
-################ Read JSON file
+#### Read JSON file
 with open('text.json', 'r') as f:
     data = json.load(f)
-################ Access key-value pairs
+#### Access key-value pairs
 for key, value in data.items():
     print(f"{key}: {value}")
-################ Modify or add a new key-value pair
+#### Modify or add a new key-value pair
 data['new_key'] = 'new_value'
-################ Write back to the file
+#### Write back to the file
 with open('text.json', 'w') as f:
-    json.dump(data, f, indent=################ 4)
+    json.dump(data, f, indent=# 4)
     
-################ 4.Q: How can you create user groups in Linux?
-################ Create a group
+#### 4.Q: How can you create user groups in Linux?
+#### Create a group
 sudo groupadd devteam
-################ Add user to group
+#### Add user to group
 sudo usermod -aG devteam username
-################ Verify
+####Verify
 groups username
 
-################ 5.Q: How do you create an RDS instance in a specific VPC using Terraform? 
+#### 5.Q: How do you create an RDS instance in a specific VPC using Terraform? 
 resource "aws_db_instance" "example" {
   identifier         = "mydb"
   engine             = "mysql"
@@ -52,8 +52,8 @@ resource "aws_db_subnet_group" "example" {
   subnet_ids = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
 }
 
-################ 6.Q: How do you create handlers in Ansible?
-################ playbook.yml
+#### 6.Q: How do you create handlers in Ansible?
+#### playbook.yml
 tasks:
   - name: Install nginx
     apt:
@@ -67,7 +67,7 @@ handlers:
       name: nginx
       state: restarted
     
-################ 7.Q: What is the typical directory structure of an Ansible project?
+####7.Q: What is the typical directory structure of an Ansible project?
 project/
 ├── inventory
 ├── playbook.yml
@@ -82,14 +82,14 @@ project/
 │       ├── vars/
 │       └── defaults/
 
-################ 8.Q: How can you set up password-less authentication in Linux using SSH?
+#### 8.Q: How can you set up password-less authentication in Linux using SSH?
 1.Generate SSH key
     ssh-keygen
 2.Copy public key to remote server:
     ssh-copy-id user@remote-server
 3. Now you can SSH without a password:
     ssh user@remote-server
-################ 9.Q: What is SELinux and how does it work?
+#### 9.Q: What is SELinux and how does it work?
 SELinux (Security-Enhanced Linux) is a security module in Linux that provides mandatory access control (MAC). It defines access policies for users, processes, and files.
 
 Check status:
@@ -99,7 +99,7 @@ Enforcing: Enforces policies.
 Permissive: Logs violations, doesn’t enforce.
 Disabled: Completely off.
 
-################ 10.Q: What is AWS Serverless and what are its key benefits?
+#### 10.Q: What is AWS Serverless and what are its key benefits?
 
 AWS Serverless refers to a cloud-native development model that allows you to build and run applications without managing servers. Key services include:
 •	AWS Lambda – run code in response to events.
@@ -108,11 +108,11 @@ AWS Serverless refers to a cloud-native development model that allows you to bui
 •	AWS Step Functions – orchestrate workflows
 
 
-################ 11. What is the difference between Declarative and Scripted Pipeline in Jenkins?
+####11. What is the difference between Declarative and Scripted Pipeline in Jenkins?
 Declarative Pipeline: Uses a more structured and predefined syntax. Easier to write and read, especially for beginners.
 Scripted Pipeline: Uses Groovy-based syntax. Offers more flexibility and is suitable for complex logic.
 
-################ 12, How can you upgrade Jenkins?
+#### 12, How can you upgrade Jenkins?
 1, Backup Jenkins (Recommended) 
 Backup your Jenkins home directory (usually /var/lib/jenkins):(sudo cp -r /var/lib/jenkins /var/lib/jenkins_backup)
 2, Upgrade Jenkins (Using Package Manager)
@@ -120,34 +120,34 @@ sudo yum check-update
 sudo yum upgrade jenkins
 sudo systemctl restart jenkins
 
-################ 13. What is Jenkins Master-Slave Architecture?
+#### 13. What is Jenkins Master-Slave Architecture?
 Master: The main Jenkins server that manages the overall environment — it schedules builds, handles the UI, and delegates tasks to agents.
 Slave (Agent): Remote machines that connect to the master and run the actual build/test jobs. They can be Linux, Windows, or container-based systems.
 
-How it works:
+#### How it works:
 Master receives a trigger (e.g., code push).
 Assigns the job to an available slave.
 Slave executes the job and reports back the result.
 Connection methods: SSH, JNLP, or WebSocket.
 
-Why use it?
+#### Why use it?
 Load distribution
 Run jobs in parallel
 Use different environments for different jobs (e.g., Java on one, Python on another)
 
 
-################ 14. What is SonarQube?
+#### 14. What is SonarQube?
 SonarQube is a code quality and security analysis tool.
 It inspects code for bugs, vulnerabilities, and code smells.
 Integrates with Jenkins, GitHub, and other CI/CD tools.
 
-################ 15. How to integrate GitHub with Jenkins?
+#### 15. How to integrate GitHub with Jenkins?
 Install Git and GitHub plugin in Jenkins.
 Create a GitHub Personal Access Token.
 In Jenkins, go to Manage Jenkins > Configure System > GitHub and add credentials.
 Set up webhooks in GitHub to trigger builds on code push.
 
-################ 16. What is the command to check memory in Linux?
+#### 16. What is the command to check memory in Linux?
 free -h
 
 #### 17. What is the command to check file size in Linux?
@@ -181,7 +181,7 @@ Check logs: /var/log/syslog, application-specific logs
 Check processes: ps aux --sort=-%mem
 
 #### 23. Write a shell script to check if drive storage is full and send an alert to the manager.
-####!/bin/bash
+#!/bin/bash
 
 THRESHOLD=90
 EMAIL="manager@example.com"
@@ -343,7 +343,7 @@ du -sh *    #### Shows folder sizes in the current directory
 A:
 > filename           #### Truncates the file
 : > filename         #### Same as above
-truncate -s #### 0 filename  #### Explicitly sets file size to #### 0
+truncate -s 0 filename  # Explicitly sets file size to 0
 #### 43. If we get a lock while executing terraform plan, how to unlock it?
  Answer:
 Use the following command to manually unlock the Terraform state:
@@ -451,7 +451,7 @@ output "instance_type" {
 #### 56. What is rollback mechanism in Jenkins?
 Answer:
 •	Use Git to revert to a previous commit and re-deploy.
-•	In pipeline, define a rollback stage to deploy last stable artifact (e.g., using Nexus/S#### 3).
+•	In pipeline, define a rollback stage to deploy last stable artifact (e.g., using Nexus/S3).
 •	Tools like ArgoCD, Ansible, or Helm can assist with rollbacks in CD.
 
 #### 57. What is Maven lifecycle?
@@ -501,16 +501,16 @@ Answer:
 
 #### 65. What are other lines than shebang in shell scripts?
 Answer:
-•	Comments (####)
+•	Comments (#)
 •	Variable declarations
 •	Logic/commands (if, echo, loops)
 •	Function definitions
 
 #### 66. What does a Shebang line represent?
 Answer:
-Starts with ####!, tells the system which interpreter to use. Example:
+Starts with #!, tells the system which interpreter to use. Example:
 
-####!/bin/bash
+#!/bin/bash
 #### 67. How can you modify permissions in Linux?
 Answer:
 Use chmod:
@@ -579,10 +579,10 @@ Use:
 set -x  #### Prints each command before execution
 set -e  #### Stops on error
 
-#### 77. What do &####, &@, &* mean in shell scripts?
+#### 77. What do &#, &@, &* mean in shell scripts?
 Answer:
 Actually:
-•	$#### – Number of script arguments
+•	$# – Number of script arguments
 •	$@ – All arguments as separate words
 •	$* – All arguments as one word
 •	& – Run process in background
@@ -614,7 +614,7 @@ A: I check disk usage with df -h and identify large files or directories using d
 
 #### 83. If you are getting an SSH error, what do you do?
 Q: How do you troubleshoot SSH connection issues?
-A: I check network reachability using ping or telnet, confirm correct IP, key permissions (chmod #### 400 for PEM), verify SSH service status, and review /var/log/auth.log or /var/log/secure. I also confirm the security group/firewall allows port 22.
+A: I check network reachability using ping or telnet, confirm correct IP, key permissions (chmod 400 for PEM), verify SSH service status, and review /var/log/auth.log or /var/log/secure. I also confirm the security group/firewall allows port 22.
 
 #### 84. Difference between ALB and NLB?
 Q: What’s the difference between Application Load Balancer (ALB) and Network Load Balancer (NLB)?
@@ -739,8 +739,8 @@ Answer:
 
 #### 104. How can you connect S3 to an EC2 instance?
 Answer:
-•	Attach an IAM Role to EC2 with S3 access permissions (e.g., AmazonS#### 3ReadOnlyAccess).
-•	Use AWS CLI or SDK on EC#### 2:
+•	Attach an IAM Role to EC2 with S3 access permissions (e.g., AmazonS3ReadOnlyAccess).
+•	Use AWS CLI or SDK on EC2:
 aws s3 ls s3://your-bucket-name
 
 #### 105. What is the difference between Security Group and Network ACL (NACL)?
@@ -831,7 +831,7 @@ etcd is a distributed key-value store used by Kubernetes to store all cluster st
 Answer:
 A CRD lets you define a custom resource (e.g., MySQLCluster) and use it like a native Kubernetes object. It extends Kubernetes capabilities without modifying the core.
 
-#### 117. What are common Kubernetes Operations (Day #### 2 Ops)?
+#### 117. What are common Kubernetes Operations (Day2 Ops)?
 Answer:
 •	Scaling workloads
 •	Monitoring & logging
@@ -884,7 +884,7 @@ Answer:
 
 #### 125. What are Pod Security Policies (PSP)?
 Answer:
-(Deprecated in Kubernetes v#### 1.#### 25)
+(Deprecated in Kubernetes v1.25)
 PSPs controlled security-related settings like:
 •	Privileged mode
 •	Host namespaces
