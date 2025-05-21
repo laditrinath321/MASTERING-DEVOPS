@@ -2,36 +2,30 @@
 Yes, this typically happens when the system runs out of memory. The OOM Killer (Out Of Memory Killer) in Linux terminates processes to free up RAM. You can check this using:
 dmesg | grep -i "killed process"
 
-# 2.	Q:  Write code for CPU and RAM utilization using Python?
+# 2.Q:  Write code for CPU and RAM utilization using Python?
 import psutil
-
 # CPU usage
 cpu_percent = psutil.cpu_percent(interval=# 1)
 print(f"CPU Usage: {cpu_percent}%")
-
 # RAM usage
 memory = psutil.virtual_memory()
 print(f"RAM Usage: {memory.percent}%")
 
-# 3.	Q: How do you read and write key-value pairs from a text.json file in Python?
+# 3.Q: How do you read and write key-value pairs from a text.json file in Python?
 import json
-
 # Read JSON file
 with open('text.json', 'r') as f:
     data = json.load(f)
-
 # Access key-value pairs
 for key, value in data.items():
     print(f"{key}: {value}")
-
 # Modify or add a new key-value pair
 data['new_key'] = 'new_value'
-
 # Write back to the file
 with open('text.json', 'w') as f:
     json.dump(data, f, indent=# 4)
     
-# 4.	Q: How can you create user groups in Linux?
+# 4.Q: How can you create user groups in Linux?
 # Create a group
 sudo groupadd devteam
 # Add user to group
@@ -39,25 +33,25 @@ sudo usermod -aG devteam username
 # Verify
 groups username
 
-# 5.	 Q: How do you create an RDS instance in a specific VPC using Terraform? 
+# 5.Q: How do you create an RDS instance in a specific VPC using Terraform? 
 resource "aws_db_instance" "example" {
   identifier         = "mydb"
   engine             = "mysql"
-  instance_class     = "db.t# 3.micro"
-  allocated_storage  = # 20
+  instance_class     = "db.t3.micro"
+  allocated_storage  = 20
   name               = "mydb"
   username           = "admin"
-  password           = "admin# 123"
+  password           = "admin123"
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
   db_subnet_group_name   = aws_db_subnet_group.example.name
   skip_final_snapshot    = true
 }
 resource "aws_db_subnet_group" "example" {
   name       = "my-subnet-group"
-  subnet_ids = [aws_subnet.subnet# 1.id, aws_subnet.subnet# 2.id]
+  subnet_ids = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
 }
 
-# 6.	Q: How do you create handlers in Ansible?
+# 6.Q: How do you create handlers in Ansible?
 # playbook.yml
 tasks:
   - name: Install nginx
@@ -72,7 +66,7 @@ handlers:
       name: nginx
       state: restarted
     
-# 7.	Q: What is the typical directory structure of an Ansible project?
+# 7.Q: What is the typical directory structure of an Ansible project?
 project/
 ├── inventory
 ├── playbook.yml
@@ -87,14 +81,14 @@ project/
 │       ├── vars/
 │       └── defaults/
 
-# 9.	Q: How can you set up password-less authentication in Linux using SSH?
-# 1.Generate SSH key
+# 8.Q: How can you set up password-less authentication in Linux using SSH?
+1.Generate SSH key
     ssh-keygen
-# 2.Copy public key to remote server:
+2.Copy public key to remote server:
     ssh-copy-id user@remote-server
-# 3. Now you can SSH without a password:
+3. Now you can SSH without a password:
     ssh user@remote-server
-# 9.	Q: What is SELinux and how does it work?
+# 9.Q: What is SELinux and how does it work?
 SELinux (Security-Enhanced Linux) is a security module in Linux that provides mandatory access control (MAC). It defines access policies for users, processes, and files.
 
 Check status:
@@ -104,7 +98,7 @@ Enforcing: Enforces policies.
 Permissive: Logs violations, doesn’t enforce.
 Disabled: Completely off.
 
-# 10.	Q: What is AWS Serverless and what are its key benefits?
+# 10.Q: What is AWS Serverless and what are its key benefits?
 
 AWS Serverless refers to a cloud-native development model that allows you to build and run applications without managing servers. Key services include:
 •	AWS Lambda – run code in response to events.
@@ -118,9 +112,9 @@ Declarative Pipeline: Uses a more structured and predefined syntax. Easier to wr
 Scripted Pipeline: Uses Groovy-based syntax. Offers more flexibility and is suitable for complex logic.
 
 # 12, How can you upgrade Jenkins?
-# 1, Backup Jenkins (Recommended) 
+1, Backup Jenkins (Recommended) 
 Backup your Jenkins home directory (usually /var/lib/jenkins):(sudo cp -r /var/lib/jenkins /var/lib/jenkins_backup)
-# 2, Upgrade Jenkins (Using Package Manager)
+2, Upgrade Jenkins (Using Package Manager)
 sudo yum check-update
 sudo yum upgrade jenkins
 sudo systemctl restart jenkins
@@ -156,36 +150,36 @@ They are stored in a separate Git repo or directory structure and loaded using:
 
 
 
-# 20 what is the difference between git revert and git reset?
+# 20. what is the difference between git revert and git reset?
 git revert creates a new commit that undoes changes of a specific commit without altering commit history (safe for shared branches).
 git reset moves the HEAD and possibly updates the index or working directory (can rewrite history; not safe for shared branches).
 
-# 21, what isthe difference between git fetch and git pull?
+# 21. what isthe difference between git fetch and git pull?
 git fetch downloads changes from the remote repository but doesn’t apply them.
 git pull is equivalent to git fetch followed by git merge; it updates your current branch.
 
-# 22, How do you troubleshoot if an application is running slow on Linux?
+# 22. How do you troubleshoot if an application is running slow on Linux?
 Check CPU/memory usage: top, htop, vmstat
 Check disk I/O: iostat, iotop, df -h
 Check network issues: netstat, ping, traceroute
 Check logs: /var/log/syslog, application-specific logs
 Check processes: ps aux --sort=-%mem
 
-# 23, Write a shell script to check if drive storage is full and send an alert to the manager.
+# 23. Write a shell script to check if drive storage is full and send an alert to the manager.
 #!/bin/bash
 
-THRESHOLD=# 90
+THRESHOLD=90
 EMAIL="manager@example.com"
-df -H | grep -vE '^Filesystem|tmpfs' | awk '{ print $# 5 " " $# 1 }' | while read output; do
-  usep=$(echo $output | awk '{ print $# 1}' | sed 's/%//g')
-  partition=$(echo $output | awk '{ print $# 2 }')
+df -H | grep -vE '^Filesystem|tmpfs' | awk '{ print $5 " " $1 }' | while read output; do
+  usep=$(echo $output | awk '{ print $1}' | sed 's/%//g')
+  partition=$(echo $output | awk '{ print $2 }')
   if [ $usep -ge $THRESHOLD ]; then
     echo "Running out of space on $partition ($usep%) as on $(date)" | 
     mail -s "Disk Alert: $partition usage is at $usep%" $EMAIL
   fi
 done
 
-# 24, What is AWS VPC peering?
+# 24. What is AWS VPC peering?
 A: VPC peering is a networking connection between two VPCs that enables routing traffic between them using private IPs. Peering works across regions and accounts but does not support transitive peering.
 
 # 25: What is terraform taint used for?
@@ -194,27 +188,27 @@ A: It marks a specific resource for destruction and recreation on the next terra
 # 26: What are Terraform Workspaces?
 A: Workspaces allow you to manage multiple state files within a single configuration directory. Useful for managing different environments like dev, staging, and prod.
 
-# 27, Explain Jenkins architecture.
+# 27. Explain Jenkins architecture.
 A: Jenkins follows a master-agent architecture.
 The master schedules builds, manages agents, and handles web UI.
 Agents execute build jobs on different platforms or environments.
 
-# 28, What is the difference between Jenkins agents and labels?
+# 28. What is the difference between Jenkins agents and labels?
 A: Agents are machines (nodes) that run jobs.
 Labels are tags you assign to agents to group them for job scheduling (e.g., linux, docker).
 
-# # 29, What is a Docker multi-stage build file?
+# 29. What is a Docker multi-stage build file?
 A: Multi-stage builds allow you to use multiple FROM statements in a Dockerfile to separate build-time and runtime environments, reducing final image size.
 
-# # 30, What are Kubernetes Stateful Services?
+# 30 What are Kubernetes Stateful Services?
 A: Stateful services retain state across restarts. StatefulSets manage pods with stable network identity, persistent storage, and ordered, graceful deployment.
 
-# # 31, what is the kubernetes architecture?
+# 31, what is the kubernetes architecture?
 o	Master Node: Controls the Kubernetes cluster. It contains several components:
 o	API Server: Exposes the Kubernetes API.
 o	Controller Manager: Ensures that the cluster is in the desired state (e.g., creating new pods when needed).
 •	Scheduler: Assigns workloads to nodes.
-•	ETCD: is a distributed key-value store used to store all cluster data, including       configuration data, secrets, and state information.
+•	ETCD: is a distributed key-value store used to store all cluster data, including configuration data, secrets, and state information.
 •	Worker Node: Runs the containerized applications. Components include:
 •	Kubelet: Ensures the containers are running in a Pod.
 •	Kube Proxy: Maintains network rules for Pod communication.
@@ -222,7 +216,6 @@ o	Controller Manager: Ensures that the cluster is in the desired state (e.g., cr
 
 # 32.What are different types of Kubernetes Services?
 A:
-
 ClusterIP – Default, internal-only access
 NodePort – Exposes service on a port on each node
 LoadBalancer – Uses external load balancer
@@ -241,12 +234,12 @@ Benefits:
 •	Auto-scaling and high availability.
 •	Pay only for what you use (event-driven).
 
-# 34. Q: What is AWS Fargate and how does it differ from EC# 2-based ECS?
+# 34. Q: What is AWS Fargate and how does it differ from EC2-based ECS?
 A:
 AWS Fargate is a serverless compute engine for containers that works with ECS and EKS.
-Key Differences from EC# 2-based ECS:
-•	Fargate: No need to provision or manage EC# 2 instances.
-•	EC# 2: You manage the EC# 2 infrastructure, networking, patching, etc.
+Key Differences from EC2-based ECS:
+•	Fargate: No need to provision or manage EC2 instances.
+•	EC2: You manage the EC2 infrastructure, networking, patching, etc.
 Use case: When you want to run containers without managing the underlying infrastructure.
 
 # 35. Q: What is AWS Glue and what is it used for?
@@ -264,13 +257,13 @@ A:
 Amazon EventBridge Scheduler (formerly CloudWatch Events Scheduler) is a fully managed scheduler for running tasks or workflows at defined times or intervals.
 Use cases:
 •	Schedule Lambda functions or Step Functions.
-•	Start/stop EC# 2 or RDS instances.
+•	Start/stop EC2 or RDS instances.
 •	Trigger Glue jobs or ECS tasks periodically.
 Example:
 json
 CopyEdit
 {
-  "ScheduleExpression": "rate(# 5 minutes)",
+  "ScheduleExpression": "rate(5 minutes)",
   "Target": {
     "Arn": "arn:aws:lambda:region:account-id:function:MyFunction"
   }
@@ -284,7 +277,7 @@ Key Concepts:
 •	Task Definition – blueprint for your container (image, CPU, memory, etc.).
 •	Services – keep tasks running, support scaling and load balancing.
 Modes:
-•	EC# 2 launch type
+•	EC2 launch type
 •	Fargate launch type (serverless)
 
 # 38. Q: What is Amazon ECR (Elastic Container Registry)?
@@ -306,15 +299,15 @@ docker push <account_id>.dkr.ecr.<region>.amazonaws.com/my-image:latest
 # 39. Q: What AWS resources have you worked with?
 A:
 I’ve worked with a wide range of AWS resources, including:
-•	EC# 2 (virtual machines)
-•	S# 3 (object storage)
+•	EC2 (virtual machines)
+•	S3 (object storage)
 •	RDS (managed databases)
 •	ECS/Fargate (containers)
 •	Lambda (serverless compute)
 •	IAM (access control)
 •	CloudWatch (monitoring/logs)
 •	VPC (networking)
-•	Route # 53 (DNS)
+•	Route 53 (DNS)
 •	Auto Scaling Groups
 •	ALB/NLB (load balancers)
 •	Elastic Beanstalk, CloudFormation, and Terraform for provisioning
@@ -322,10 +315,10 @@ I’ve worked with a wide range of AWS resources, including:
 # 40. Q: What AWS services do you use for scaling instances?
 A:
 For automatic and manual scaling, I’ve used:
-•	Auto Scaling Groups (ASG): Automatically add/remove EC# 2 instances based on CPU, memory, or custom metrics.
+•	Auto Scaling Groups (ASG): Automatically add/remove EC2 instances based on CPU, memory, or custom metrics.
 •	Elastic Load Balancer (ELB): Distributes traffic across instances to balance load.
 •	CloudWatch Alarms: Used to trigger scaling actions.
-•	ECS with Fargate or EC# 2: Task-based scaling based on request load or queue depth.
+•	ECS with Fargate or EC2: Task-based scaling based on request load or queue depth.
 
 # 41. Q: Which command is used in Linux to check disk usage?
 A:
@@ -336,9 +329,9 @@ A:
 > filename           # Truncates the file
 : > filename         # Same as above
 truncate -s # 0 filename  # Explicitly sets file size to # 0
-      # 43. If we get a lock while executing terraform plan, how to unlock it?
-            Answer:
-                     Use the following command to manually unlock the Terraform state:
+# 43. If we get a lock while executing terraform plan, how to unlock it?
+ Answer:
+Use the following command to manually unlock the Terraform state:
 terraform force-unlock <LOCK_ID>
 Only use it if you're sure no other process is actively using the state.
 
@@ -361,16 +354,16 @@ git push -u origin main                 # Push code
 Answer:
 •	Define two different provider blocks with different credentials:
 provider "aws" {
-  alias  = "account# 1"
-  region = "us-east-# 1"
-  profile = "account# 1-profile"
+  alias  = "account1"
+  region = "us-east-1"
+  profile = "account1-profile"
 }
 provider "aws" {
-  alias  = "account# 2"
-  region = "us-west-# 2"
-  profile = "account# 2-profile"
+  alias  = "account2"
+  region = "us-west-2"
+  profile = "account2-profile"
 }
-•	Use provider = aws.account# 1 and provider = aws.account# 2 in resources.
+•	Use provider = aws.account1 and provider = aws.account2 in resources.
 
 # 47. How can we secure Docker containers?
 Answer:
@@ -402,7 +395,7 @@ Answer:
 # 50 . Difference between ALB and NLB
 Answer:
 Feature	ALB (Application Load Balancer)	NLB (Network Load Balancer)
-Layer	Layer # 7 (HTTP/HTTPS)	Layer # 4 (TCP/UDP)
+Layer	Layer7 (HTTP/HTTPS)	Layer4 (TCP/UDP)
 Features	Path-based, host-based routing	Fast TCP handling, static IP
 Use Case	Web apps, HTTP APIs	Low latency apps, real-time systems
 
@@ -417,7 +410,7 @@ Answer:
 Feature	AWS Lambda	AWS Fargate
 Type	Serverless functions	Serverless containers
 Use Case	Short event-driven tasks	Long-running container apps
-Timeout	Max # 15 minutes	No hard timeout
+Timeout	Max15 minutes	No hard timeout
 Pricing	Per request + duration	Based on vCPU and memory used
 
 # 53. How can you print output line by line in shell scripting?
@@ -428,7 +421,7 @@ done < filename.txt
 
 # 54. What is OAI (Origin Access Identity) in CloudFront?
 Answer:
-OAI is used to restrict access to an S# 3 bucket so only CloudFront can fetch content, preventing direct access via S# 3 URL.
+OAI is used to restrict access to an S3 bucket so only CloudFront can fetch content, preventing direct access via S3 URL.
 
 # 55. How can you use if-else in Terraform?
 Answer:
@@ -719,9 +712,9 @@ yaml
         enabled: yes
 •	Run the playbook: ansible-playbook -i inventory.ini playbook.yml
 
-# 103. How can you troubleshoot if an application is not working on an EC# 2 instance?
+# 103. How can you troubleshoot if an application is not working on an EC2 instance?
 Answer:
-•	Check EC# 2 instance status (Running/Reachable).
+•	Check EC2 instance status (Running/Reachable).
 •	Verify Security Groups and NACLs (port access).
 •	Check application logs (/var/log/, journalctl, etc.).
 •	Confirm service status (systemctl status).
@@ -729,11 +722,11 @@ Answer:
 •	Test network connectivity (ping, telnet, curl).
 
 
-# 104. How can you connect S# 3 to an EC# 2 instance?
+# 104. How can you connect S3 to an EC2 instance?
 Answer:
-•	Attach an IAM Role to EC# 2 with S# 3 access permissions (e.g., AmazonS# 3ReadOnlyAccess).
+•	Attach an IAM Role to EC2 with S# 3 access permissions (e.g., AmazonS# 3ReadOnlyAccess).
 •	Use AWS CLI or SDK on EC# 2:
-aws s# 3 ls s# 3://your-bucket-name
+aws s3 ls s3://your-bucket-name
 
 # 105. What is the difference between Security Group and Network ACL (NACL)?
 Answer:
@@ -741,19 +734,19 @@ Feature	Security Group	NACL
 Level	Instance-level	Subnet-level
 Stateful	Yes	No
 Rules	Allow only	Allow and Deny
-Applies to	EC# 2 Instances	Subnets
+Applies to	EC2 Instances	Subnets
 Default Behavior	Deny all unless allowed	Allow all unless changed
 
-# 106. What are EC# 2 instance types?
+# 106. What are EC2 instance types?
 Answer:
-EC# 2 instances are categorized based on use case:
+EC2 instances are categorized based on use case:
 Instance Type	Use Case	Examples
-t-series	Burstable general purpose	t# 2.micro, t# 3.small
-m-series	General purpose	m# 5.large, m# 6g.medium
-c-series	Compute optimized	c# 5.large, c# 6g.xlarge
-r-series	Memory optimized	r# 5.large, r# 6g.xlarge
-i-series	Storage optimized	i# 3.large, i# 4i.xlarge
-g/p-series	GPU/Accelerated computing	g# 4dn.xlarge, p# 3.# 2xlarge
+t-series	Burstable general purpose	t2.micro, t3.small
+m-series	General purpose	m5.large, m6g.medium
+c-series	Compute optimized	c5.large, c6g.xlarge
+r-series	Memory optimized	r5.large, r6g.xlarge
+i-series	Storage optimized	i3.large, i4i.xlarge
+g/p-series	GPU/Accelerated computing	g4dn.xlarge, p3.2xlarge
 
 # 107. What should you do if a Pod crashes?
 Answer:
