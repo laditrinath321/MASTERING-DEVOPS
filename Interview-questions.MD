@@ -4,15 +4,18 @@ Yes, this typically happens when the system runs out of memory. The OOM Killer (
 dmesg | grep -i "killed process"
 
 #### 2.Q:  Write code for CPU and RAM utilization using Python?
+```python
 import psutil
-#### CPU usage
-cpu_percent = psutil.cpu_percent(interval=#1)
+# CPU usage
+cpu_percent = psutil.cpu_percent(interval=1)
 print(f"CPU Usage: {cpu_percent}%")
-#### RAM usage
+# RAM usage
 memory = psutil.virtual_memory()
 print(f"RAM Usage: {memory.percent}%")
+```
 
 #### 3.Q: How do you read and write key-value pairs from a text.json file in Python?
+```python
 import json
 #### Read JSON file
 with open('text.json', 'r') as f:
@@ -24,8 +27,8 @@ for key, value in data.items():
 data['new_key'] = 'new_value'
 #### Write back to the file
 with open('text.json', 'w') as f:
-    json.dump(data, f, indent=# 4)
-    
+    json.dump(data, f, indent= 4)
+```    
 #### 4.Q: How can you create user groups in Linux?
 #### Create a group
 sudo groupadd devteam
