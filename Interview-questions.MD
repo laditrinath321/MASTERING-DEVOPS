@@ -948,7 +948,7 @@ Use cases:
 •	Monitoring agents (e.g., Prometheus Node Exporter)
 
 #### 131. What is the SLA of each and every incident in your current organisation
-####A:
+#### A:
 In our organisation we have 4 types of incidents based on priority and urgency i.e., P1, P2, P3, P4
 The SLA is 2, 8, 72 and 96 hours respectively.
 
@@ -1024,12 +1024,13 @@ tasks:
     tags: install
 ```
 Run specific task with:
-ansible-playbook site.yml --tags install
+```ansible-playbook site.yml --tags install```
 
 #### 137. How do you SSH into a remote server and run a command?
 Example:
 
 ```ssh username@ip "ls -l /path/to/dir"```
+
 Replace username@ip with the actual user and server IP (e.g., ubuntu@192.168.1.10).
 
 #### 138. Bash: How do you print the last word of a sentence?
@@ -1037,8 +1038,8 @@ Question: Write a bash command to print the last word.
 
 Answer:
 
-echo "This is a sentence" | awk '{print $NF}'
-$NF = Number of Fields, i.e., last field.
+```echo "This is a sentence" | awk '{print $NF}'```
+```$NF = Number of Fields, i.e., last field.```
 
 #### 139. This is incorrect syntax: Echo | awk -F ‘{pritn($NF)} — Why?
 Issue:
@@ -1047,18 +1048,21 @@ Wrong quote characters
 pritn is a typo, should be print
 -F not needed unless using a specific delimiter
 Corrected version:
-echo "Hello world" | awk '{print $NF}'
+
+```echo "Hello world" | awk '{print $NF}'```
 
 #### 140. Bash: Write a script to print the first word of a string
 Answer (Script):
 
-#!/bin/bash
+```#!/bin/bash
 read -p "Enter a sentence: " sentence
-echo "$sentence" | awk '{print $1}'
+echo "$sentence" | awk '{print $1}'```
 
 Usage:
 $ ./firstword.sh
+
 Enter a sentence: Hello from DevOps
+
 Hello
 
 #### 141Q: What is blue-green deployment?
@@ -1146,10 +1150,10 @@ AssumeRole lets a user or service temporarily get permissions of another IAM rol
 
 #### 152Q: Bash script to find error logs in log files?
 A:
-#!/bin/bash
+```#!/bin/bash
 LOG_DIR="/path/to/logs"
 PATTERN="error"
-grep -iH "$PATTERN" "$LOG_DIR"/*.log
+grep -iH "$PATTERN" "$LOG_DIR"/*.log```
 
 
 #### 153Q: How to enable communication between different VPCs?
@@ -1187,13 +1191,15 @@ Answer:
 No, the API server and other control plane components are usually run as static pods, which are not scheduled by the Kubernetes scheduler.
 
 #### 158Q. Compare Deployment vs. StatefulSet
-Feature	Deployment	StatefulSet
-Pod identity	Anonymous (random names)	Stable, unique network identity
-Volume	Shared or ephemeral	Persistent volume per pod
-Use case	Stateless applications	Stateful applications (e.g., DBs)
-Pod ordering	No	Ordered deployment & termination
-Scaling	Easy	Slower due to ordered creation
-
+---------------------|--------------------------------------------|---------------------------------------------
+Feature	             |          Deployment	                  |                 StatefulSet
+---------------------|--------------------------------------------|---------------------------------------------
+Pod identity	     |      Anonymous (random names)	          |        Stable, unique network identity
+Volume	Shared or    |        ephemeral	                          |        Persistent volume per pod
+Use case	     |      Stateless applications	          |        Stateful applications (e.g., DBs)
+Pod ordering	     |         No	                          |        Ordered deployment & termination
+Scaling	             |         Easy	                          |        Slower due to ordered creation
+---------------------|--------------------------------------------|----------------------------------------------
 #### 159Q. What are Kubernetes Services?
 Answer:
 A Kubernetes Service provides a stable network endpoint to access a set of pods.
@@ -1205,13 +1211,16 @@ Uses labels/selectors to route traffic to the correct pods
 Answer:
 HPA automatically scales the number of pods in a Deployment or ReplicaSet based on metrics like CPU usage or custom metrics.
 
-#### 161Q. HPA vs VPA in Kubernetes
-Feature	HPA	VPA
-Purpose	Scales number of pods	Adjusts CPU/memory requests/limits
-Triggered by	CPU/Memory/Custom metrics	Resource usage recommendations
-Works with	Deployments, ReplicaSets	Mostly Deployments
-Scaling direction	Horizontal (more pods)	Vertical (resize pods)
-Restart required	No	Yes
+#### 161Q. HPA vs VPA in Kubernete
+---------------------|--------------------------------|-----------------------------------------
+Feature	             |                HPA	      |            VPA
+---------------------|--------------------------------|-----------------------------------------
+Purpose	             |      Scales number of pods     |Adjusts CPU/memory requests/limits
+Triggered by	     |      CPU/Memory/Custom metrics | Resource usage recommendations
+Works with	     |      Deployments, ReplicaSets  |	Mostly Deployments
+Scaling direction    |	    Horizontal (more pods)    |	Vertical (resize pods)
+Restart required     |	              No	      |             Yes
+---------------------|--------------------------------|------------------------------------------
 
 #### 162Q. What is a DaemonSet in Kubernetes?
 Answer:
@@ -1219,9 +1228,12 @@ A DaemonSet ensures that a specific pod runs on all (or selected) nodes in the c
 Examples: log collection, monitoring agents, network plugins.
 
 #### 163Q. Compare Liveness Probe vs. Readiness Probe
-Probe Type	Purpose	Effect on Pod
-Liveness Probe	Checks if container is alive	Pod is restarted if it fails
-Readiness Probe	Checks if container is ready to serve	Pod is removed from service endpoints
+-----------------------|-----------------------------------------------|--------------------------------------------
+Probe Type	       |              Purpose 	                       |      Effect on Pod
+-----------------------|-----------------------------------------------|--------------------------------------------
+Liveness Probe	       |        Checks if container is alive	       | Pod is restarted if it fails
+Readiness Probe        |        Checks if container is ready to serve  | Pod is removed from service endpoints
+-----------------------|-----------------------------------------------|-------------------------------------------
 
 #### 164Q. How do you perform a Kubernetes cluster upgrade?
 Answer:
@@ -1261,11 +1273,14 @@ PVC is not deleted (unless manually configured via ReclaimPolicy).
 The underlying PersistentVolume may remain, depending on the reclaim policy.
 
 #### 169Q. Compare node affinity vs. node selector
-Feature	Node Affinity	Node Selector
-Flexibility	More expressive	Simple key-value match
-Operators	In, NotIn, Exists, etc.	Only exact match
-Scheduling type	Preferred/Required	Required
-Use case	Advanced scheduling requirements	Basic filtering
+-------------------------------------------------------------------------------------------
+Feature                     Node Affinity	                 Node Selector
+-------------------------------------------------------------------------------------------
+Flexibility	            More expressive	                 Simple key-value match
+Operators	           In, NotIn, Exists, etc.	         Only exact match
+Scheduling type	           Preferred/Required	                 Required
+Use case	           Advanced scheduling requirements	 Basic filtering
+-------------------------------------------------------------------------------------------
 
 #### 170Q. What is the Terraform directory structure?
 Answer:
@@ -1273,15 +1288,21 @@ Answer:
 
 project/
 ├── main.tf        # Main configuration file
+
 ├── variables.tf   # Input variables
+
 ├── outputs.tf     # Output values
+
 ├── terraform.tfvars # Actual variable values
+
 ├── backend.tf     # Backend config for remote state
+
 ├── modules/       # Reusable modules
 │   └── <module_name>/
 │       ├── main.tf
 │       ├── variables.tf
 │       └── outputs.tf
+
 └── envs/          # Environment-specific configs
     ├── dev/
     ├── prod/
