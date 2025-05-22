@@ -1024,12 +1024,12 @@ tasks:
     tags: install
 ```
 Run specific task with:
-```ansible-playbook site.yml --tags install```
+ansible-playbook site.yml --tags install
 
 #### 137. How do you SSH into a remote server and run a command?
 Example:
 
-```ssh username@ip "ls -l /path/to/dir"```
+ssh username@ip "ls -l /path/to/dir"
 
 Replace username@ip with the actual user and server IP (e.g., ubuntu@192.168.1.10).
 
@@ -1038,8 +1038,9 @@ Question: Write a bash command to print the last word.
 
 Answer:
 
-```echo "This is a sentence" | awk '{print $NF}'```
-```$NF = Number of Fields, i.e., last field.```
+echo "This is a sentence" | awk '{print $NF}'
+
+$NF = Number of Fields, i.e., last field.
 
 #### 139. This is incorrect syntax: Echo | awk -F ‘{pritn($NF)} — Why?
 Issue:
@@ -1049,14 +1050,14 @@ pritn is a typo, should be print
 -F not needed unless using a specific delimiter
 Corrected version:
 
-```echo "Hello world" | awk '{print $NF}'```
+echo "Hello world" | awk '{print $NF}'
 
 #### 140. Bash: Write a script to print the first word of a string
 Answer (Script):
 
-```#!/bin/bash
+#!/bin/bash
 read -p "Enter a sentence: " sentence
-echo "$sentence" | awk '{print $1}'```
+echo "$sentence" | awk '{print $1}'
 
 Usage:
 $ ./firstword.sh
@@ -1150,10 +1151,10 @@ AssumeRole lets a user or service temporarily get permissions of another IAM rol
 
 #### 152Q: Bash script to find error logs in log files?
 A:
-```#!/bin/bash
+#!/bin/bash
 LOG_DIR="/path/to/logs"
 PATTERN="error"
-grep -iH "$PATTERN" "$LOG_DIR"/*.log```
+grep -iH "$PATTERN" "$LOG_DIR"/*.log
 
 
 #### 153Q: How to enable communication between different VPCs?
@@ -1233,7 +1234,7 @@ Probe Type	       |              Purpose 	                       |      Effect o
 -----------------------|-----------------------------------------------|--------------------------------------------
 Liveness Probe	       |        Checks if container is alive	       | Pod is restarted if it fails
 Readiness Probe        |        Checks if container is ready to serve  | Pod is removed from service endpoints
------------------------|-----------------------------------------------|-------------------------------------------
+-----------------------|-----------------------------------------------|--------------------------------------------
 
 #### 164Q. How do you perform a Kubernetes cluster upgrade?
 Answer:
