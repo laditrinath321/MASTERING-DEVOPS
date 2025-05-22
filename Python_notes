@@ -1120,3 +1120,372 @@ from my_package import module1, module2
 
 print(module1.function1())  # Output: This is function 1 from module 1
 print(module2.function2())  # Output: This is function 2 from module 2
+
+
+
+
+
+====================================================================================================================================
+============================================================
+
+
+
+ENVIRONMENT VARIABLE: available system-wide, and accessible by any child process.
+
+
+Environment variables is a  way to provide input to a Python program from outside the code. 
+-------------
+
+On Unix/Linux/macOS:
+
+export MY_ENV_VARIABLE="some_value"
+
+===============================================================================
+On Windows: 
+
+set MY_VARIABLE=some_value
+
+---------------
+import os
+
+user = os.getenv('USERNAME')
+awsvar = os.getenv('MY_VARIABLE')
+
+print(f"user env variable is : {user}")
+
+print(f"aws variable is: {awsvar}")
+
+==================
+./abc.sh val1 val2 val3
+===================================================================================================
+
+COMMAND LINE ARGUMENTS:
+
+Command-Line Arguments
+Command-line arguments are values passed to a script when it is executed from the command line. They allow the user to provide input to the program dynamically.
+
+
+sys.argv is a list in Python, which contains the command-line arguments passed to the script.
+
+sys.argv[0] is the name of the script itself.
+
+sys.argv[1] is the first command-line argument provided to the script.
+sys.argv[2] is the second command-line argument provided to the script
+
+
+-------------
+
+# my_script.py "env" "rel_number"
+
+
+import sys
+
+env_name = sys.argv[1]
+rel_number = sys.argv[2]
+
+
+print(f"The environment to deploy:  {env_name} ")
+print(f"The Release version is :  {rel_number} ")
+
+
+
+--------------------
+
+
+Example Combining Environment Variables and Command-Line Arguments
+
+# combined_script.py
+import os
+import sys
+
+user = os.getenv('USERNAME')
+file_path = sys.argv[1]
+
+print(f"user env variable is : {user}")
+print(f"File Path: {file_path}")
+
+
+============================================================
+FILE OPERATIONS:  
+
+Opening a File:
+
+You can open a file using the open() function. 
+
+
+file = open("devops_b15.txt", "r")  # Opens the file in read mode
+
+Common modes include:
+
+'r' : Read mode (default)
+'w' : Write mode (creates a new file or truncates an existing file)
+'a' : Append mode (writes data at the end of the file)
+
+
+
+-------------------
+
+# Writing to a file
+with open('devops.txt', 'w') as file:
+    file.write('Hello, World!-3\n')
+    file.write('This is a test file.\n')
+
+
+# Reading from a file
+with open('devops.txt', 'r') as file:
+    content = file.read()
+    print(content)
+
+
+# Appending to a file
+with open('devops.txt', 'a') as file:
+    file.write('Appending a new line.\n')
+
+
+# Reading from a file
+with open('devops.txt', 'r') as file:
+    content = file.read()
+    print(content)
+	
+
+===============================================
+
+
+Closing a File
+It's a good practice to close a file when you're done with it to free up system resources. 
+Using 
+   with open(...) as file: automatically closes the file when the block is exited.
+
+
+file = open("devops.txt", "r")
+content = file.read()
+file.close()  # Manually closing the file
+
+
+
+================================================================
+Exception Handling:
+
+Handling File Exceptions
+It's important to handle potential exceptions that may occur during file operations.
+
+FileNotFoundError, 
+IOError
+PermissionError
+Disk Full
+Device Not Ready
+Hardware Failure
+
+---------------------------------------------------------
+
+try:
+    with open('devops.txt', 'r') as file:
+        content = file.read()
+        print(content)
+		
+except FileNotFoundError:
+    print("Error: The file was not found.")
+except IOError:
+    print("Error: An I/O error occurred.")
+except PermissionError:
+    print("Error: You do not have permission to read the file.")
+except Exception as e:
+    print(f"An unexpected error occurred: {e}")
+
+
+===================================================================================
+
+REAL TIME USE - CASES :
+
+
+Write a Python script that checks if a server/host is up by pinging it.
+
+---------------------
+
+import os
+
+
+def ping_server(server):
+    response = os.system(f"ping -c 1 {server}")
+    return response == 0
+
+
+server = "google.com"
+
+
+if ping_server(server):
+    print(f"Server {server} is up")
+else:
+    print(f"Server {server} is down")
+	
+	
+==============================================================
+
+MODULES :
+
+os: This module provides a way of using operating system-dependent functionality, such as creating directories or handling file paths.
+
+shutil: This module provides a higher-level interface for file operations, including copying entire directories.
+
+sys: 
+
+psutil :
+===================================
+
+Example 2: Create a Directory Backup
+
+Write a Python script that copies a directory to a backup location.
+
+import shutil
+import os
+
+# Directory to backup
+source_dir = r"C:\Users\Dell\Desktop\awskeys\aug7"
+
+# Backup destination
+backup_dir =  r"C:\Users\Dell\Desktop\awskeys\backupfiles"
+
+# Ensure backup directory exists
+os.makedirs(backup_dir, exist_ok=True)
+
+# Copy the directory
+shutil.copytree(source_dir, os.path.join(backup_dir, os.path.basename(source_dir)))
+
+print("Backup completed successfully")
+
+===========================================================================
+DATE: 20 MAY 2025
+
+Example 3: Monitor Disk Usage
+Question:
+
+Write a Python script that checks the disk usage of a directory and prints a warning if it exceeds a certain threshold.
+
+----------------------------------
+
+import shutil
+
+#shutil: This module provides a higher-level interface for file operations, including copying entire directories.
+
+monitor_dir = r"C:"
+# Disk usage threshold (in percentage)
+threshold = 80
+
+# Get disk usage
+total, used, free = shutil.disk_usage(monitor_dir)
+
+print(total, used, free)   ## Print total, used, and free bytes on the disk
+
+usage_percent = used / total * 100  
+
+# Check if usage exceeds threshold
+if usage_percent > threshold:
+    print(f"Warning: Disk usage is {usage_percent:.2f}%")
+else:
+    print(f"Disk usage is {usage_percent:.2f}%, within the threshold")
+	
+	
+************
+Normally, Python treats backslashes (\) in strings as escape characters (for example, \n means newline, \t means tab).
+A raw string tells Python to treat backslashes literally, without interpreting them as escape sequences.
+*******************	
+	
+=================================================================	
+
+Example 4:
+Python code to get CPU and RAM utilization
+	
+	
+import psutil
+
+# CPU utilization (percentage)
+cpu_percent = psutil.cpu_percent(interval=1)  # interval=1 means measure over 1 second
+print(f"CPU Utilization: {cpu_percent}%")
+
+# RAM utilization
+memory_info = psutil.virtual_memory()
+print(f"RAM Utilization: {memory_info.percent}%")
+
+### memory_info is a objeect , It returns an object (a special kind of variable) called a named tuple.
+
+
+	
+=========================================================================
+Example 5: Start and Stop a Service
+Question:
+Write a Python script that starts and stops a system service.
+
+import os
+
+# Function to start a service
+def start_service(service_name):
+    os.system(f"sudo systemctl start {service_name}")
+    print(f"Service {service_name} started")
+
+# Function to stop a service
+def stop_service(service_name):
+    os.system(f"sudo systemctl stop {service_name}")
+    print(f"Service {service_name} stopped")
+
+
+
+# Service to manage
+service_name = "jenkins"
+
+
+
+
+# Start and stop the service
+start_service(service_name)
+stop_service(service_name)
+status_service(service_name)
+============================================================
+Example 5: List Docker Containers
+docker ps -a
+
+
+Question:
+Write a Python script that lists all running Docker containers.
+
+import os
+
+# List running Docker containers
+os.system("docker ps")
+
+print("Listed all running Docker containers")
+
+
+==================================================================
+
+#The Boto3 library is official aws sdk for python . 
+
+
+import boto3
+
+def create_ec2_instance(instance_type, ami_id):
+    # Connect to EC2 as a resource
+    ec2 = boto3.resource('ec2')
+    
+    # Create a new EC2 instance
+    instances = ec2.create_instances(
+        ImageId=ami_id,            # AMI ID (e.g., Amazon Linux or Ubuntu image)
+        InstanceType=instance_type, # Instance type (e.g., 't2.micro')
+        MinCount=1,                # Minimum number of instances to launch
+        MaxCount=1                 # Maximum number of instances to launch
+    )
+    
+    # Get the instance object and print its ID
+    instance = instances[0]
+    print(f"Created EC2 instance with ID: {instance.id}")
+
+
+
+
+create_ec2_instance('t2.micro', 'ami-036c2987dfef867fb')
+
+
+
+
+===========================================
+
+

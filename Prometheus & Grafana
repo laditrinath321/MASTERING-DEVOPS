@@ -1,0 +1,99 @@
+aws configure 
+
+AKIA2NK3Yxxxxxxxxxxxxxxxxxxxxxxxx
+
+/KK3WHDeeY1xxxxxxxxxxxxxxxxxxxxxx
+
+
+- LATENCY
+- TRAFFIC - NO OF REQUEST 
+- ERRORS - PAGE TIME OUT , ERROR CODES 
+- SATURATION LIMITS - CPU 80 
+
+VALUES ( KEY - VALUE PAIR )  ( TIME - VALUE) (CRONOLOGICAL EVENT - TIME SERIES DATA) -- SHOUD KEEP IN TSDB ( PROMETHEUS) 
+INFACT EVERY TRACEBLE PARAMETER U CAN MONITOR
+
+--------
+
+NOW USING MONITORING , WE CAN DETECT PROBLEM , BUT WHAT IS ROOT CAUSE . NOW OBSERVABILITY COMES INTO PICTURE .
+
+CHECK -- LOGS 
+      -- METRICS
+	  -- TRACE 
+
+--------------------------------
+
+1. eks cluster --
+
+  eksctl create cluster bat13
+  
+  (prerequisites -- awscli , eksctl , kubectl ...) 
+  
+  ==================================================================================
+  
+  
+kubectl Installation on Linux :
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version
+
+--------------------------------
+
+eksctl installation on aws linux machine 
+
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+
+
+==============================================
+
+  
+3. heml Installation :
+
+
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+
+chmod 700 get_helm.sh
+
+./get_helm.sh
+
+
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
+
+========================================================
+ADD & UPDATE THE PROMETHEUS-COMMUNITY HELM REPOSITORY :
+ 
+helm repo add stable https://charts.helm.sh/stable
+
+Add Prometheus helm repo:
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+
+helm search repo prometheus-community
+
+--------------
+Update helm repo:
+
+helm repo update
+--------------------------------------------------------
+
+kubectl create namespace prometheus
+
+helm install stable prometheus-community/kube-prometheus-stack -n prometheus
+(If error comes , try with with below command) 
+
+
+helm install stable prometheus-community/kube-prometheus-stack -n prometheus --set prometheus.prometheusSpec.maximumStartupDurationSeconds=600
+
+Expose Prometheus Service & Grafana service to Load balancer and access from browser. 
+Port numbe for Prometheus : 9090
+Port numbe for Grafana : 80
+
+
+This is required to access prometheus-server using your browser.
