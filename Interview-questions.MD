@@ -71,32 +71,21 @@ handlers:
       state: restarted
     
 #### 7.Q: What is the typical directory structure of an Ansible project?
+```
 project/
-
 ├── inventory
-
 ├── playbook.yml
-
 ├── roles/
-
 │   └── webserver/
-
 │       ├── tasks/
-
 │       │   └── main.yml
-
 │       ├── handlers/
-
 │       │   └── main.yml
-
 │       ├── templates/
-
 │       ├── files/
-
 │       ├── vars/
-
 │       └── defaults/
-
+```
 #### 8.Q: How can you set up password-less authentication in Linux using SSH?
 1.Generate SSH key
     ssh-keygen
