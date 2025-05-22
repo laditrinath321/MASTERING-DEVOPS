@@ -178,8 +178,6 @@ They are stored in a separate Git repo or directory structure and loaded using:
 @Library('library-name') _( in shell script)
 
 
-
-
 #### 20. what is the difference between git revert and git reset?
 git revert creates a new commit that undoes changes of a specific commit without altering commit history (safe for shared branches).
 git reset moves the HEAD and possibly updates the index or working directory (can rewrite history; not safe for shared branches).
@@ -195,21 +193,11 @@ Check network issues: netstat, ping, traceroute
 Check logs: /var/log/syslog, application-specific logs
 Check processes: ps aux --sort=-%mem
 
-#### 23. Write a shell script to check if drive storage is full and send an alert to the manager.
-#!/bin/bash
 
-THRESHOLD=90
-EMAIL="manager@example.com"
-
-df -H | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $5 " " $1 }' | while read -r output; do
-  usep=$(echo "$output" | awk '{ print $1}' | tr -d '%')
-  partition=$(echo "$output" | awk '{ print $2 }')
-
-  if [ "$usep" -ge "$THRESHOLD" ]; then
-    echo "Running out of space on $partition ($usep%) as on $(date)" | \
-    mail -s "Disk Alert: $partition usage is at $usep%" "$EMAIL"
-  fi
-done
+#### 23: What is a Key Pair in AWS?
+A:
+A Key Pair is used for secure SSH access to EC2 instances. It includes a public key (stored in AWS) and a private key (downloaded by the user).
+You create it in EC2 Dashboard → Key Pairs → Create Key Pair, and use it when launching an EC2 instance.
 
 
 #### 24. What is AWS VPC peering?
@@ -377,11 +365,11 @@ Answer:
 
 #### 45 . What are the steps to push your code to a central repo (e.g., GitHub)?
 Answer:
-git init                                     #### Initialize local repo
-git add .                                 #### Stage changes
-git commit -m "message"     #### Commit changes
-git remote add origin <repo-url>             #### Link to central repo
-git push -u origin main                 #### Push code
+git init                                     # Initialize local repo
+git add .                                    # Stage changes
+git commit -m "message"                      # Commit changes
+git remote add origin <repo-url>             # Link to central repo
+git push -u origin main                      # Push code
 
 #### 46 . How can you create infrastructure at a time in two AWS accounts using Terraform?
 Answer:
@@ -591,20 +579,20 @@ pipeline {
   }
 }
 
-#### 76. How can you check script failures in shell scripts?
-Answer:
-Use:
-set -x  # Prints each command before execution
+#### 76. What is SNS and how do you create it?
+A:
+SNS (Simple Notification Service) is an AWS service used to send notifications via email, SMS, HTTP, or Lambda.
+To create it:
 
-set -e  # Stops on error
+Go to AWS SNS in the console.
+Click “Create topic” → Choose Standard or FIFO.
+Name the topic and click Create.
+To add a subscriber, choose the topic → Create subscription → select protocol (e.g., Email) and provide the endpoint.
 
-#### 77. What do $#, $@, $*,& mean in shell scripts?
-Answer:
-Actually:
-•	$# – Number of script arguments
-•	$@ – All arguments as separate words
-•	$* – All arguments as one word
-•	& – Run process in background
+#### 77. What is a Playbook?
+A:
+A Playbook in Ansible is a YAML file that defines a set of automation tasks (called "plays") to be executed on remote systems. It is used to configure systems, deploy applications, and manage infrastructure in a repeatable way.
+Example use: Installing software, restarting services, or copying files across servers.
 
 #### 78. How do you execute commands in Linux?
 Answer:
@@ -982,7 +970,7 @@ Deployment
 
 Structure:
 
-yaml
+```yaml
 
 name: CI Pipeline
 on: [push]
@@ -995,6 +983,7 @@ jobs:
 
       - name: Run build
         run: echo "Build complete"
+```
 		
 #### 135. How do you deploy from staging to preprod using CI/CD?
 Answer:
@@ -1003,7 +992,7 @@ Define environments: staging, preprod
 Use manual approval (environments protection rules) for preprod.
 Sample GitHub Actions deployment step:
 
-yaml
+```yaml
 
 jobs:
   deploy-staging:
@@ -1016,6 +1005,7 @@ jobs:
     steps:
       - name: Deploy to preprod
         run: ./deploy.sh
+```
 Use a deployment strategy like:
 Use if conditions to check branch or tag.
 Use environment with required reviewers in GitHub.
@@ -1024,7 +1014,7 @@ Use environment with required reviewers in GitHub.
 Answer:
 Use tags in the playbook:
 
-yaml
+```yaml
 
 tasks:
   - name: Install Apache
@@ -1032,13 +1022,14 @@ tasks:
       name: apache2
       state: present
     tags: install
+```
 Run specific task with:
 ansible-playbook site.yml --tags install
 
 #### 137. How do you SSH into a remote server and run a command?
 Example:
 
-ssh username@ip "ls -l /path/to/dir"
+```ssh username@ip "ls -l /path/to/dir"```
 Replace username@ip with the actual user and server IP (e.g., ubuntu@192.168.1.10).
 
 #### 138. Bash: How do you print the last word of a sentence?
