@@ -4,15 +4,18 @@ Yes, this typically happens when the system runs out of memory. The OOM Killer (
 dmesg | grep -i "killed process"
 
 #### 2.Q:  Write code for CPU and RAM utilization using Python?
+```python
 import psutil
-#### CPU usage
-cpu_percent = psutil.cpu_percent(interval=#1)
+# CPU usage
+cpu_percent = psutil.cpu_percent(interval=1)
 print(f"CPU Usage: {cpu_percent}%")
-#### RAM usage
+# RAM usage
 memory = psutil.virtual_memory()
 print(f"RAM Usage: {memory.percent}%")
+```
 
 #### 3.Q: How do you read and write key-value pairs from a text.json file in Python?
+```python
 import json
 #### Read JSON file
 with open('text.json', 'r') as f:
@@ -24,8 +27,8 @@ for key, value in data.items():
 data['new_key'] = 'new_value'
 #### Write back to the file
 with open('text.json', 'w') as f:
-    json.dump(data, f, indent=# 4)
-    
+    json.dump(data, f, indent= 4)
+```    
 #### 4.Q: How can you create user groups in Linux?
 #### Create a group
 sudo groupadd devteam
@@ -68,32 +71,21 @@ handlers:
       state: restarted
     
 #### 7.Q: What is the typical directory structure of an Ansible project?
+```
 project/
-
 ├── inventory
-
 ├── playbook.yml
-
 ├── roles/
-
 │   └── webserver/
-
 │       ├── tasks/
-
 │       │   └── main.yml
-
 │       ├── handlers/
-
 │       │   └── main.yml
-
 │       ├── templates/
-
 │       ├── files/
-
 │       ├── vars/
-
 │       └── defaults/
-
+```
 #### 8.Q: How can you set up password-less authentication in Linux using SSH?
 1.Generate SSH key
     ssh-keygen
@@ -175,8 +167,6 @@ They are stored in a separate Git repo or directory structure and loaded using:
 @Library('library-name') _( in shell script)
 
 
-
-
 #### 20. what is the difference between git revert and git reset?
 git revert creates a new commit that undoes changes of a specific commit without altering commit history (safe for shared branches).
 git reset moves the HEAD and possibly updates the index or working directory (can rewrite history; not safe for shared branches).
@@ -192,21 +182,11 @@ Check network issues: netstat, ping, traceroute
 Check logs: /var/log/syslog, application-specific logs
 Check processes: ps aux --sort=-%mem
 
-#### 23. Write a shell script to check if drive storage is full and send an alert to the manager.
-#!/bin/bash
 
-THRESHOLD=90
-EMAIL="manager@example.com"
-
-df -H | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $5 " " $1 }' | while read -r output; do
-  usep=$(echo "$output" | awk '{ print $1}' | tr -d '%')
-  partition=$(echo "$output" | awk '{ print $2 }')
-
-  if [ "$usep" -ge "$THRESHOLD" ]; then
-    echo "Running out of space on $partition ($usep%) as on $(date)" | \
-    mail -s "Disk Alert: $partition usage is at $usep%" "$EMAIL"
-  fi
-done
+#### 23: What is a Key Pair in AWS?
+A:
+A Key Pair is used for secure SSH access to EC2 instances. It includes a public key (stored in AWS) and a private key (downloaded by the user).
+You create it in EC2 Dashboard → Key Pairs → Create Key Pair, and use it when launching an EC2 instance.
 
 
 #### 24. What is AWS VPC peering?
@@ -374,11 +354,11 @@ Answer:
 
 #### 45 . What are the steps to push your code to a central repo (e.g., GitHub)?
 Answer:
-git init                                     #### Initialize local repo
-git add .                                 #### Stage changes
-git commit -m "message"     #### Commit changes
-git remote add origin <repo-url>             #### Link to central repo
-git push -u origin main                 #### Push code
+git init                                     # Initialize local repo
+git add .                                    # Stage changes
+git commit -m "message"                      # Commit changes
+git remote add origin <repo-url>             # Link to central repo
+git push -u origin main                      # Push code
 
 #### 46 . How can you create infrastructure at a time in two AWS accounts using Terraform?
 Answer:
@@ -588,20 +568,20 @@ pipeline {
   }
 }
 
-#### 76. How can you check script failures in shell scripts?
-Answer:
-Use:
-set -x  # Prints each command before execution
+#### 76. What is SNS and how do you create it?
+A:
+SNS (Simple Notification Service) is an AWS service used to send notifications via email, SMS, HTTP, or Lambda.
+To create it:
 
-set -e  # Stops on error
+Go to AWS SNS in the console.
+Click “Create topic” → Choose Standard or FIFO.
+Name the topic and click Create.
+To add a subscriber, choose the topic → Create subscription → select protocol (e.g., Email) and provide the endpoint.
 
-#### 77. What do $#, $@, $*,& mean in shell scripts?
-Answer:
-Actually:
-•	$# – Number of script arguments
-•	$@ – All arguments as separate words
-•	$* – All arguments as one word
-•	& – Run process in background
+#### 77. What is a Playbook?
+A:
+A Playbook in Ansible is a YAML file that defines a set of automation tasks (called "plays") to be executed on remote systems. It is used to configure systems, deploy applications, and manage infrastructure in a repeatable way.
+Example use: Installing software, restarting services, or copying files across servers.
 
 #### 78. How do you execute commands in Linux?
 Answer:
@@ -957,7 +937,7 @@ Use cases:
 •	Monitoring agents (e.g., Prometheus Node Exporter)
 
 #### 131. What is the SLA of each and every incident in your current organisation
-####A:
+#### A:
 In our organisation we have 4 types of incidents based on priority and urgency i.e., P1, P2, P3, P4
 The SLA is 2, 8, 72 and 96 hours respectively.
 
@@ -979,7 +959,7 @@ Deployment
 
 Structure:
 
-yaml
+```yaml
 
 name: CI Pipeline
 on: [push]
@@ -992,6 +972,7 @@ jobs:
 
       - name: Run build
         run: echo "Build complete"
+```
 		
 #### 135. How do you deploy from staging to preprod using CI/CD?
 Answer:
@@ -1000,7 +981,7 @@ Define environments: staging, preprod
 Use manual approval (environments protection rules) for preprod.
 Sample GitHub Actions deployment step:
 
-yaml
+```yaml
 
 jobs:
   deploy-staging:
@@ -1013,6 +994,7 @@ jobs:
     steps:
       - name: Deploy to preprod
         run: ./deploy.sh
+```
 Use a deployment strategy like:
 Use if conditions to check branch or tag.
 Use environment with required reviewers in GitHub.
@@ -1021,7 +1003,7 @@ Use environment with required reviewers in GitHub.
 Answer:
 Use tags in the playbook:
 
-yaml
+```yaml
 
 tasks:
   - name: Install Apache
@@ -1029,6 +1011,7 @@ tasks:
       name: apache2
       state: present
     tags: install
+```
 Run specific task with:
 ansible-playbook site.yml --tags install
 
@@ -1036,6 +1019,7 @@ ansible-playbook site.yml --tags install
 Example:
 
 ssh username@ip "ls -l /path/to/dir"
+
 Replace username@ip with the actual user and server IP (e.g., ubuntu@192.168.1.10).
 
 #### 138. Bash: How do you print the last word of a sentence?
@@ -1044,6 +1028,7 @@ Question: Write a bash command to print the last word.
 Answer:
 
 echo "This is a sentence" | awk '{print $NF}'
+
 $NF = Number of Fields, i.e., last field.
 
 #### 139. This is incorrect syntax: Echo | awk -F ‘{pritn($NF)} — Why?
@@ -1053,6 +1038,7 @@ Wrong quote characters
 pritn is a typo, should be print
 -F not needed unless using a specific delimiter
 Corrected version:
+
 echo "Hello world" | awk '{print $NF}'
 
 #### 140. Bash: Write a script to print the first word of a string
@@ -1064,5 +1050,868 @@ echo "$sentence" | awk '{print $1}'
 
 Usage:
 $ ./firstword.sh
+
 Enter a sentence: Hello from DevOps
+
 Hello
+
+#### 141Q: What is blue-green deployment?
+A: It’s a release strategy with two environments (Blue & Green). Blue is live, Green is the new version. After testing, switch traffic to Green. Rollback is easy by switching back to Blue.
+
+
+#### 142Q: How to configure multi-region failover if one region goes down?
+A: Use Route 53 with failover routing policy and health checks. Primary region serves traffic; if it fails, Route 53 redirects to the secondary region.
+
+
+#### 143Q: How to enable monitoring for multiple AWS services?
+A: Use CloudWatch:
+- Metrics: auto-collected
+- Logs: via agents or SDK
+- Alarms: for thresholds
+- Dashboards: for visualization
+- Events/EventBridge: for automation
+
+
+#### 144Q: How to monitor and track cost by environment?
+A:
+- Tag all resources with Environment=sbox/uat/prod
+- Use CloudWatch filters and dashboards per tag
+- In Cost Explorer, filter by tags
+- Enable Cost Allocation Tags and use AWS Budgets
+
+
+#### 145Q: A public Lambda needs to access a service in a private subnet. How?
+A:
+- Attach Lambda to VPC with private subnets
+- Ensure security group rules allow traffic
+- Lambda uses ENI to talk privately inside VPC
+
+#### 1466Q. GitLab vs Jenkins (Table Format)
+-----------------------------------------------------------------------------------------------------------
+| Feature               | GitLab CI/CD                         | Jenkins                                  |
+|-----------------------|--------------------------------------|------------------------------------------|
+| Setup                 | Pre-integrated, simple               | Manual setup with plugins                |
+| Pipeline Definition   | .gitlab-ci.yml (YAML)                |    Jenkinsfile (Groovy DSL)              |
+| Scalability           | Runner-based, auto-scaled            | Master-agent model                       |
+| Maintenance           | Less, managed by GitLab              | High, manual plugins/updates             |
+| Integration           | Native Git integration               | Any SCM via plugins                      |
+| UI                    | Modern & built-in                    | Plugin-dependent                         |
+| Cost                  | Free & paid tiers                    | Open-source, infra cost                  |
+-----------------------------------------------------------------------------------------------------------
+#### 147Q: Key difference when configuring a new CI/CD pipeline?
+A:
+- Jenkins: Customizable but manual setup (Jenkinsfile, agents, plugins).
+- GitLab: Easy, tightly integrated with Git, uses .gitlab-ci.yml.
+
+#### 148Q. NAT Instance vs NAT Gateway (Table Format)
+-----------------------------------------------------------------------------------------------------
+| Feature          | NAT Instance                          | NAT Gateway                            |
+|------------------|---------------------------------------|----------------------------------------|
+| Type             | EC2-based, user-managed               | AWS-managed service                    |
+| High Availability| Manual setup                          | Built-in multi-AZ                      |
+| Performance      | Depends on EC2 size                   | Scalable & high throughput             |
+| Cost             | Cheaper for low traffic               | More expensive, better for production  |
+| Maintenance      | Manual updates                        | No maintenance                         |
+-----------------------------------------------------------------------------------------------------
+
+
+#### 149Q: How should developers write code to access AWS services (S#### 3, SQS, SNS, RDS)?
+A:
+- Use AWS SDKs
+- Access via IAM roles with least privilege
+- Store secrets in Secrets Manager
+- Follow retry/backoff logic
+- Use env variables for config
+- Log via CloudWatch
+
+#### 150Q: How to handle developer authentication to AWS?
+A:
+- Use IAM users/groups with MFA
+- Prefer IAM roles with temporary STS credentials
+- Use AWS SSO or federation
+- Manage secrets via AWS Vault or CLI profiles
+- Rotate creds, no hardcoding
+
+
+#### 151Q: What is AssumeRole in AWS?
+A:
+AssumeRole lets a user or service temporarily get permissions of another IAM role using STS, ideal for cross-account access or secure delegation.
+
+
+#### 152Q: Bash script to find error logs in log files?
+A:
+#!/bin/bash
+LOG_DIR="/path/to/logs"
+PATTERN="error"
+grep -iH "$PATTERN" "$LOG_DIR"/*.log
+
+
+#### 153Q: How to enable communication between different VPCs?
+A:
+- VPC Peering: Direct, simple, but no transitive routing
+- Transit Gateway: Centralized hub, scalable
+- PrivateLink: For exposing services, not full VPC access
+- VPN: For secure cross-region or hybrid setups
+
+
+#### 154Q. What happens if the kubelet goes down?
+Answer:
+If the kubelet on a node goes down:
+The node stops reporting to the Kubernetes control plane.
+After a default period (usually 5 minutes), the node is marked NotReady.
+The scheduler may reschedule the pods on other healthy nodes (if they are not static pods or daemonsets).
+
+#### 155Q. What is a static pod in Kubernetes?
+Answer:
+A static pod is managed directly by the kubelet on a node, not through the Kubernetes API server.
+Defined in a local manifest file (e.g., /etc/kubernetes/manifests/).
+Used for critical components like control plane pods.
+Cannot be managed with kubectl.
+
+#### 156Q. What is the role of the Kubernetes scheduler?
+Answer:
+The Kubernetes scheduler assigns newly created pods to nodes based on:
+Resource availability
+Node affinity/anti-affinity
+Taints and tolerations
+Custom scheduling rules
+
+#### 157Q. Can the scheduler schedule the API server as well?
+Answer:
+No, the API server and other control plane components are usually run as static pods, which are not scheduled by the Kubernetes scheduler.
+
+#### 158Q. Compare Deployment vs. StatefulSet
+---------------------|--------------------------------------------|---------------------------------------------
+Feature	             |          Deployment	                  |                 StatefulSet
+---------------------|--------------------------------------------|---------------------------------------------
+Pod identity	     |      Anonymous (random names)	          |        Stable, unique network identity
+Volume	Shared or    |        ephemeral	                          |        Persistent volume per pod
+Use case	     |      Stateless applications	          |        Stateful applications (e.g., DBs)
+Pod ordering	     |         No	                          |        Ordered deployment & termination
+Scaling	             |         Easy	                          |        Slower due to ordered creation
+---------------------|--------------------------------------------|----------------------------------------------
+#### 159Q. What are Kubernetes Services?
+Answer:
+A Kubernetes Service provides a stable network endpoint to access a set of pods.
+Types: ClusterIP, NodePort, LoadBalancer, ExternalName
+Helps decouple frontends from backends
+Uses labels/selectors to route traffic to the correct pods
+
+#### 160Q. What is Horizontal Pod Autoscaler (HPA) in Kubernetes?
+Answer:
+HPA automatically scales the number of pods in a Deployment or ReplicaSet based on metrics like CPU usage or custom metrics.
+
+#### 161Q. HPA vs VPA in Kubernete
+---------------------|--------------------------------|-----------------------------------------
+Feature	             |                HPA	      |            VPA
+---------------------|--------------------------------|-----------------------------------------
+Purpose	             |      Scales number of pods     |Adjusts CPU/memory requests/limits
+Triggered by	     |      CPU/Memory/Custom metrics | Resource usage recommendations
+Works with	     |      Deployments, ReplicaSets  |	Mostly Deployments
+Scaling direction    |	    Horizontal (more pods)    |	Vertical (resize pods)
+Restart required     |	              No	      |             Yes
+---------------------|--------------------------------|------------------------------------------
+
+#### 162Q. What is a DaemonSet in Kubernetes?
+Answer:
+A DaemonSet ensures that a specific pod runs on all (or selected) nodes in the cluster.
+Examples: log collection, monitoring agents, network plugins.
+
+#### 163Q. Compare Liveness Probe vs. Readiness Probe
+-----------------------|-----------------------------------------------|--------------------------------------------
+Probe Type	       |              Purpose 	                       |      Effect on Pod
+-----------------------|-----------------------------------------------|--------------------------------------------
+Liveness Probe	       |        Checks if container is alive	       | Pod is restarted if it fails
+Readiness Probe        |        Checks if container is ready to serve  | Pod is removed from service endpoints
+-----------------------|-----------------------------------------------|--------------------------------------------
+
+#### 164Q. How do you perform a Kubernetes cluster upgrade?
+Answer:
+Drain nodes: kubectl drain <node-name>
+Upgrade kubeadm: apt upgrade kubeadm
+Run kubeadm upgrade plan and kubeadm upgrade apply
+Upgrade kubelet and kubectl
+Restart kubelet
+Uncordon nodes: kubectl uncordon <node-name>
+
+#### 165Q. If a pod has three containers and one container is unhealthy (liveness probe fails), what happens?
+Answer:
+Only the unhealthy container is restarted by kubelet. The other two containers continue to run unaffected.
+
+#### 166Q. If the kubectl command is not working, how do you troubleshoot it?
+Answer:
+
+Check ~/.kube/config
+Validate context: kubectl config get-contexts
+Check connectivity to API server
+Run kubectl version
+Use curl or telnet to test API server reachability
+
+#### 167Q. Why is curl -k https://<api-server>:6443 not working?
+Answer:
+Possible reasons:
+API server is down or not reachable
+Port 6443 is blocked by firewall
+TLS certificate mismatch (use -k to ignore)
+IP or DNS name incorrect
+
+#### 168Q. In a Kubernetes Deployment using a PVC, where a pod is using the PVC, what happens to the pod if someone deletes the Deployment?
+Answer:
+
+Pods created by the Deployment will be deleted.
+PVC is not deleted (unless manually configured via ReclaimPolicy).
+The underlying PersistentVolume may remain, depending on the reclaim policy.
+
+#### 169Q. Compare node affinity vs. node selector
+-------------------------------------------------------------------------------------------
+Feature                     Node Affinity	                 Node Selector
+-------------------------------------------------------------------------------------------
+Flexibility	            More expressive	                 Simple key-value match
+Operators	           In, NotIn, Exists, etc.	         Only exact match
+Scheduling type	           Preferred/Required	                 Required
+Use case	           Advanced scheduling requirements	 Basic filtering
+-------------------------------------------------------------------------------------------
+
+#### 170Q. What is the Terraform directory structure?
+Answer:
+
+
+project/
+├── main.tf        # Main configuration file
+
+├── variables.tf   # Input variables
+
+├── outputs.tf     # Output values
+
+├── terraform.tfvars # Actual variable values
+
+├── backend.tf     # Backend config for remote state
+
+├── modules/       # Reusable modules
+│   └── <module_name>/
+│       ├── main.tf
+│       ├── variables.tf
+│       └── outputs.tf
+
+└── envs/          # Environment-specific configs
+    ├── dev/
+    ├── prod/
+
+
+#### 171Q. How do you connect one EC2 instance to another across multiple regions?
+Answer:
+You can connect EC2 instances across regions by:
+Setting up a VPN connection between VPCs in different regions.
+Using VPC Peering (now supported cross-region).
+Using AWS Transit Gateway for more complex architectures.
+
+#### 172Q. What is an Internet Gateway, and where is it placed?
+Answer:
+An Internet Gateway (IGW) is a horizontally scaled, redundant, and highly available VPC component that allows communication between instances in your VPC and the internet.
+It is attached at the VPC level, not the subnet level.
+
+#### 173Q. What is VPC Peering, and how do you configure it?
+Answer:
+VPC Peering connects two VPCs to route traffic using private IPs.
+Steps to configure:
+Create a VPC peering connection.
+Accept the request from the target VPC.
+Add route table entries in both VPCs.
+Ensure security groups and NACLs allow traffic.
+
+#### 174Q. How do you give private access to an S3 bucket?
+Answer:
+
+Remove public access settings.
+Attach bucket policy that allows access from specific VPC or IAM roles.
+Use VPC endpoint for S3 for private access without using the internet.
+
+#### 175Q. What is CloudFront?
+Answer:
+CloudFront is AWS’s Content Delivery Network (CDN) that caches content at edge locations to reduce latency and speed up delivery.
+
+#### 176Q. What is a NAT Gateway, and where do you place it?
+Answer:
+A NAT Gateway enables instances in a private subnet to access the internet (for updates, etc.) while remaining unreachable from the outside.
+It is placed in a public subnet and requires a route from private subnets to the NAT Gateway.
+
+#### 177Q. What is the Terraform state file? Where and how do you store it to avoid conflicts?
+Answer:
+The terraform.tfstate file stores the current state of your infrastructure.
+To avoid conflicts:
+
+Use remote state backends (e.g., S3 with DynamoDB locking).
+
+Example:
+
+backend "s3" {
+  bucket         = "my-terraform-state"
+  key            = "env/dev/terraform.tfstate"
+  region         = "us-west-2"
+  dynamodb_table = "terraform-lock"
+}
+
+#### 178Q. A client asks you to provision infrastructure with EC2, S3 bucket, and VPC. Write the Terraform script
+Answer:
+
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_s3_bucket" "bucket" {
+  bucket = "my-unique-bucket-name-123"
+  acl    = "private"
+}
+
+resource "aws_instance" "web" {
+  ami           = "ami-0abcdef1234567890"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.main.id
+}
+
+resource "aws_subnet" "main" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "us-west-2a"
+}
+#### 179Q. What is the difference between Terraform and Ansible?
+Feature                  	Terraform	                                       Ansible
+Purpose	             Infrastructure provisioning (IaC)	               Configuration management
+Language	         Declarative (HCL)	                               Procedural (YAML + Python)
+Idempotency	         Built-in	                                       Manual in some cases
+Agent-based	         Agentless	                                       Agentless
+Execution	         Plans infra before applying changes	               Executes tasks immediately
+
+#### 180Q. How do you back up data in Docker? What are the different ways?
+Answer:
+
+Use Docker volumes: back up by copying data from /var/lib/docker/volumes/.
+Use docker cp to copy data from containers.
+Mount volume and copy data manually.
+
+#### 181Q. Write a Dockerfile for a Python application
+dockerfile
+
+FROM python:3.9
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["python", "app.py"]
+
+#### 182Q. What is the difference between ADD and ENTRYPOINT?
+--------------|------------------------------------------------------------|-----------------------------------------------------|
+Feature	      |         ADD	                                               |                  ENTRYPOINT                         |
+--------------|------------------------------------------------------------|-----------------------------------------------------|
+Purpose	      |     Copies files + supports remote URLs & unpacking	       |       Sets the main command to run in container     |
+Advanced use  |   Not often required	                                   |      Good for wrapper scripts or default commands   |
+--------------|------------------------------------------------------------|-----------------------------------------------------|
+#### 183Q. What is the command to delete all containers with a single command?
+
+docker rm -f $(docker ps -aq)
+
+#### 184Q. What is Persistent Storage, PV (Persistent Volume), and PVC (Persistent Volume Claim)?
+Answer:
+
+Persistent Storage: storage that outlives pod lifecycles.
+PV: cluster-managed storage resource.
+PVC: user request for storage; binds to a PV.
+
+#### 185Q. Do you handle production support issues?
+Answer:
+Yes. This involves:
+Monitoring logs with kubectl logs
+Restarting failed pods
+Analyzing node/pod health
+Investigating metrics and alerts from tools like Prometheus/Grafana
+
+#### 186Q. What Nagios plugins have you used?
+Answer:
+
+check_http – for web server health
+check_disk – for disk space monitoring
+check_load – for CPU load
+check_ping – for network availability
+
+#### 187Q. What are the default port numbers for Grafana and Prometheus?
+Tool	Default Port
+Grafana	3000
+Prometheus	9090
+
+#### 188Q. What is the main configuration file in Grafana?
+Answer:
+grafana.ini
+Located by default at /etc/grafana/grafana.ini
+
+#### 189Q. What is the difference between a hard link and a soft link
+Feature	                  Hard Link	                    Soft Link (Symbolic Link)
+Inode sharing	     Shares the same inode	            Points to the original inode
+Broken link	Works    even if original is deleted	    Breaks if the target is deleted
+File systems	     Must be on the same file system	Can link across file systems
+Appearance	         File	                                     Shortcut
+
+#### 190Q. What are your day-to-day activities as a DevOps/Kubernetes engineer?
+Answer:
+
+In my day to day activities , I will handle multiple tasks:
+My day starts with a team meeting called a "scrum call." 
+In this meeting, we discuss our progress, and the team assigns tasks for the day.
+After the meeting, I check Jenkins, a tool we use for automation. 
+I look for any new builds or updates. If there are errors in the builds, I work on fixing them.
+Kubernetes Monitoring: If Jenkins is running smoothly, 
+I move on to checking our Kubernetes (K8s) clusters and pods. 
+These are parts of our system where applications run. 
+If any pod has issues or isn’t working correctly, 
+I troubleshoot the problem, fix it, and inform my team about the updates.
+Sometimes, I create Kubernetes configuration files called manifest files. 
+These define how our applications and services should run in the Kubernetes environment.
+We have distributed team,where cloud team will ping me,for some cloud tasks like 
+creating ebs,s3,iam roles and vpc related issues.
+
+#### 191Q. Any issues in your project?
+Answer:
+
+High CPU/memory usage in some pods.
+Disk space issues in nodes.
+Stuck pods due to PVC binding problems.
+API server latency under high load.
+Ingress routing misconfigurations.
+
+#### 192Q. Servers got rebooted → How do you tell why it got rebooted?
+Answer:
+
+Check system logs:
+
+journalctl --since "1 hour ago" | grep -i shutdown
+Inspect /var/log/messages or /var/log/syslog.
+Use last reboot to see last reboot times.
+Look for kernel panic, OOM errors, or manual reboots in logs.
+
+#### 193Q. Process taking high CPU utilization – how to handle it?
+Answer:
+
+Use top, htop, or ps -eo pid,ppid,%cpu,cmd --sort=-%cpu to identify.
+Check logs of the process/container.
+Restart the pod/container if needed.
+Add resource limits in Kubernetes to prevent abuse.
+
+#### 194Q. How do you increase disk size?
+Answer:
+
+EC2 (AWS):
+Modify volume from AWS Console.
+Use lsblk to identify disk.
+Resize partition with growpart.
+
+Resize filesystem:
+sudo resize2fs /dev/xvdf1
+#### 195Q. How do you increase the space size in the same partition?
+Answer:
+
+Extend the disk at the cloud/VM level.
+Use tools like growpart or parted to expand the partition.
+Use resize2fs (for ext4) or xfs_growfs (for XFS) to resize the filesystem.
+
+
+#### 196Q. Architecture of Kubernetes
+Answer:
+
+Master Components: API Server, Scheduler, Controller Manager, etcd.
+Node Components: Kubelet, Kube-proxy, container runtime (Docker/CRI-O).
+Add-ons: DNS, Dashboard, Ingress controller, etc.
+
+#### 197Q. K8s Autoscaling
+Answer:
+
+Horizontal Pod Autoscaler (HPA): scales pods based on CPU/memory or custom metrics.
+Vertical Pod Autoscaler (VPA): adjusts resource requests/limits of pods.
+Cluster Autoscaler: adds/removes nodes based on pending pods.
+
+#### 198Q. Difference between StatefulSet & Deployment
+Feature	                  StatefulSet	                                     Deployment
+Pod Identity	    Maintains unique, stable identity	                   Pods are interchangeable
+Use Case	        Databases, Kafka, etc.	                               Web apps, APIs
+Volume	            Unique persistent volume per pod	                   Shared or ephemeral volume
+Start Order	         Ordered and graceful	                                        Unordered
+
+#### 199Q. What is the concept of Ingress in Kubernetes?
+Answer:
+Ingress is an API object that manages external HTTP/HTTPS access to services inside a Kubernetes cluster.
+It allows path-based or host-based routing and works with Ingress controllers like NGINX, Traefik.
+
+#### 200Q. What is a Namespace in K8s?
+Answer:
+A namespace is a logical isolation unit in Kubernetes used to divide cluster resources between multiple users or teams.
+Useful in multi-tenant environments.
+
+#### 201Q. Difference between ReplicaSet & DaemonSet
+Feature	                        ReplicaSet	                                              DaemonSet
+Purpose	               Maintain a set number of pod replicas	                     Run a pod on every node
+Use Case	               Stateless apps	                                     Monitoring, logging agents
+Scheduling	             Based on replicas	                                     One per node
+
+#### 202Q. Advantages of Kubernetes
+Answer:
+
+Automated scaling and self-healing.
+Rolling updates and rollbacks.
+Resource optimization.
+Supports hybrid and multi-cloud environments.
+Declarative configuration with YAML.
+
+#### 203Q. What is Blue-Green Deployment in K8s?
+Answer:
+Blue-Green Deployment involves running two identical environments (blue and green).
+Blue = current live
+Green = new version
+Switch traffic from blue to green once the green version is verified.
+
+#### 204Q. What is DockerHub?
+Answer:
+DockerHub is a cloud-based registry to store and share container images.
+You can pull official or custom images from it.
+
+#### 205Q. 3 containers running – How to get into one container?
+Answer:
+
+docker exec -it <container_id_or_name> /bin/bash
+Or use /bin/sh if bash is not available.
+
+#### 206Q. Can I use JSON over YAML in Kubernetes?
+Answer:
+Yes, Kubernetes supports both YAML and JSON for manifests, but YAML is more human-readable and widely used.
+
+#### 207Q. Difference between Docker Container & Kubernetes
+Feature	Docker (Standalone)	Kubernetes
+Scope	Single container runtime	Orchestration and management platform
+Scaling	Manual	Auto-scaling
+Load balancing	Needs extra setup	Built-in via Services
+Health checks	Basic	Advanced (readiness/liveness probes)
+
+#### 208Q. How will you monitor your Docker containers?
+Answer:
+
+Use docker stats for live metrics.
+Use third-party tools like cAdvisor, Prometheus, and Grafana.
+Integrate with logging tools like ELK or Fluentd.
+
+#### 209Q. Hands-on with Grafana & Prometheus – what can you do?
+Answer:
+
+Install and configure Prometheus with K8s metrics.
+Add Prometheus as a data source in Grafana.
+Create dashboards to monitor CPU, memory, disk, pod health.
+Set up alerts in Grafana.
+
+#### 210Q. What is SonarQube?
+Answer:
+SonarQube is a tool used to analyze code quality, detect bugs, code smells, and security vulnerabilities in code repositories.
+Integrates with CI/CD pipelines to enforce code standards.
+
+#### 211Q. What is ELK Stack?
+Answer:
+
+The ELK Stack is a powerful log aggregation and analytics platform composed of three main open-source components:
+Component	                                                     Description
+Elasticsearch	                                          Search and analytics engine.Stores and indexes logs.
+Logstash	                                              Data processing pipeline that collects and parses logs from various sources.
+Kibana	                                                  Visualization tool for exploring data stored in Elasticsearch.
+
+ELK is used for centralized logging, monitoring, and visualizing logs from servers, applications, containers, and cloud infrastructure.
+
+#### 212Q. Script for Fetching the Memory Utilization of 2 Servers
+Answer:
+
+Here is a simple Bash script using ssh to fetch memory utilization from two remote Linux servers:
+
+#!/bin/bash
+
+# List of servers (replace with actual IPs or hostnames)
+servers=("server1.example.com" "server2.example.com")
+
+# Loop through each server
+for server in "${servers[@]}"; do
+  echo "----- Memory usage on $server -----"
+  ssh user@$server free -h
+  echo ""
+done
+How it works:
+Uses ssh to connect to each server.
+Runs free -h to display memory usage in a human-readable format.
+Prints the output with a header for each server.
+
+Prerequisites:
+Passwordless SSH access (using SSH keys) must be set up.
+Replace user with your actual username and hostnames accordingly.
+
+
+#### 213Q. You have static & dynamic web apps using high EC2 + NGINX, causing high cost & low availability. What's your solution?
+Answer:
+
+Use S3 + CloudFront for static content.
+Run dynamic apps on ECS/EKS/Fargate with auto-scaling.
+Replace high EC2s with smaller instances in ASG.
+Use ALB instead of standalone NGINX.
+Containerize the app for better resource usage.
+
+Result: Lower cost, high availability, easier management.
+
+#### 214Q. One out of 10 microservices in Kubernetes is down. How do you fix it?
+Answer:
+
+Run kubectl get pods to find the failed pod.
+Use kubectl logs and describe to diagnose.
+Check for resource issues or crash errors.
+Restart with kubectl rollout restart.
+Roll back if a new image/code caused the issue.
+Ensure HPA and probes are correctly set.
+
+Result: Service is restored quickly, root cause identified.
+
+#### 215Q. A client wants to implement a new system in 3 months, but your analysis shows it will take 6 months. How would you handle this situation?
+Answer:
+
+Communicate Transparently
+Explain the findings and timeline based on a clear scope, technical complexity, and resource availability.
+
+Break Down the Project
+Propose a phased approach: deliver core features in 3 months, with additional phases after that.
+
+Explore Alternatives
+Identify options to accelerate delivery—like increasing the team size, reducing scope (MVP), or using pre-built solutions.
+
+Provide Evidence
+Share data from similar past projects, effort estimates, and risk assessments to support your timeline.
+
+Goal: Align client expectations with reality while still showing flexibility and commitment to delivery.
+
+#### 216Q. How would you assess whether an AI implementation would be beneficial for a specific business process?
+Answer:
+
+Understand the Process
+Evaluate if the process is data-driven, repetitive, and can benefit from pattern recognition or prediction.
+
+Identify Pain Points
+Look for inefficiencies, manual work, or high error rates that AI can solve (e.g., forecasting, automation, classification).
+
+Check Data Availability
+Confirm if there's sufficient, clean, and labeled data to train AI models.
+
+Estimate ROI
+Compare AI implementation costs vs. potential benefits (time saved, error reduction, better decisions).
+
+Pilot First
+Propose a small-scale proof of concept (PoC) to validate feasibility and effectiveness.
+
+Goal: Ensure AI adds real value, is technically feasible, and aligns with business goals.
+
+#### 217Q. What is sed command used for, and what are its flags?
+Answer:
+sed is a stream editor used for text transformation, like find & replace.
+
+Common flags:
+
+-e : Add the script to the commands to be executed
+-i : Edit files in-place
+-n : Suppress default output (used with p for printing lines)
+s : Substitute (e.g., sed 's/old/new/g' file.txt)
+
+#### 218Q. What is awk command?
+Answer:
+awk is a powerful text processing tool used for pattern scanning and data extraction.
+Example:
+
+awk '{print $1, $3}' file.txt
+Prints the 1st and 3rd columns of a file.
+
+#### 219Q. How to find files in Linux?
+Answer:
+
+find /path -name "filename"
+Examples:
+
+By name: find . -name "*.log"
+By size: find / -size +100M
+Recently modified: find /var/log -mtime -1
+
+#### 220Q. Java Spring Boot app deployment in Kubernetes
+Answer:
+
+Create Dockerfile for your app.
+Build and push the image to a container registry.
+Create K8s manifests:
+Deployment
+Service
+(Optional) Ingress
+Apply using:
+
+kubectl apply -f deployment.yaml
+
+#### 221Q. Can you explain path-based routing?
+Answer:
+In Kubernetes (via Ingress), path-based routing directs traffic based on the URL path.
+
+Example:
+
+- path: /api
+  backend: serviceName: api-service
+- path: /web
+  backend: serviceName: web-service
+  
+#### 222Q. What are roles in Kubernetes?
+Answer:
+Roles define permissions within a namespace.
+ClusterRoles apply across all namespaces.
+Used in RBAC (Role-Based Access Control) to control what users or services can do.
+
+#### 223Q. What are bucket policies in AWS S3?
+Answer:
+Bucket policies are JSON-based rules that control access to an entire S3 bucket or objects inside.
+
+Example:
+
+{
+  "Effect": "Allow",
+  "Principal": "*",
+  "Action": ["s3:GetObject"],
+  "Resource": "arn:aws:s3:::mybucket/*"
+}
+#### 224Q. If you get a 403 error (Access Denied) in S3, what do you check?
+Answer:
+
+Check bucket policy
+Check IAM role/user permissions
+Verify if object ACL is private
+Ensure correct Region and signed URL, if applicable
+
+#### 225Q. We check the policy: GetObject, PutObject — why?
+Answer:
+These are the S3 actions needed to download (GetObject) or upload (PutObject) files.
+Without them, you’ll get 403 errors.
+
+#### 226Q. What are objects in Kubernetes?
+Answer:
+Objects are persistent entities representing the desired state.
+Examples: Pod, Service, Deployment, ConfigMap, Secret, Ingress.
+
+#### 227Q. What is terraform taint?
+Answer:
+Marks a resource for destruction and recreation during the next apply.
+
+terraform taint aws_instance.my_instance
+#### 228Q. What is git merge and git rebase?
+Command	                     Purpose
+merge	             Combines two branches, creates a merge commit
+rebase	             Reapplies commits from one branch onto another for a linear history
+
+#### 229Q. What are branching strategies?
+Answer:
+
+GitFlow (feature, develop, release branches)
+Trunk-Based (single main branch with feature flags)
+GitHub Flow (short-lived feature branches + pull requests)
+
+#### 230Q. What are issues you faced in production?
+Answer:
+
+Pod crash due to memory leaks.
+PVC binding issues.
+DNS resolution failure in K8s.
+S3 permission errors (403).
+Auto-scaling delay under heavy load.
+
+#### 231Q. Which Linux distro did you use in your project?
+Answer:
+Mostly Amazon Linux 2, Ubuntu, or CentOS depending on the cloud provider and application needs.
+
+#### 232Q. Which distro do you prefer and why?
+Answer:
+Ubuntu – due to:
+Wide community support
+Easy package management (apt)
+Better documentation
+
+#### 233Q. What are roles and templates in Ansible?
+Answer:
+
+Roles: Standardized way to organize playbooks into reusable components (tasks, handlers, vars, etc.)
+Templates: Jinja2 files (.j2) used to dynamically generate configuration files.
+
+#### 234Q. What is 2/2 check in AWS EC2?
+Answer:
+
+EC2 passes 2 checks:
+System status check
+Instance status check
+Both must be "2/2 checks passed" for healthy status.
+
+#### 235Q. How to create EKS Cluster with IAM Role?
+Answer:
+
+Create an IAM role with AmazonEKSClusterPolicy.
+Use eksctl or Terraform to create the cluster:
+
+eksctl create cluster --name demo --region us-west-2 --with-oidc
+
+#### 236Q. Why did you use S3 in your project?
+Answer:
+
+Store logs, backups, artifacts.
+Host static websites.
+Use as Terraform backend (state file storage).
+
+#### 237Q. What is a bucket policy in AWS?
+Answer:
+JSON document attached to a bucket to define access rules for users, roles, or the public.
+
+#### 238Q. What is 403 error in S3 object permission?
+Answer:
+It means access denied. Possible causes:
+Missing s3:GetObject permission
+Object is private
+Bucket policy restricts access
+
+#### 239Q. What is state locking in Terraform?
+Answer:
+Prevents simultaneous changes to the same infrastructure by multiple users.
+Uses DynamoDB table (in AWS) to manage locks.
+
+#### 240Q. Where will you find lockingID in Terraform?
+Answer:
+In the DynamoDB table used for state locking.
+Look for the item with LockID in the table where Terraform stores its locks.
+
+#### 241Q. What are templates in Ansible and how do you define them?
+Answer:
+
+Files written using Jinja2 syntax.
+Defined in playbooks like:
+
+yaml
+
+tasks:
+  - name: Apply nginx config
+    template:
+      src: nginx.conf.j2
+      dest: /etc/nginx/nginx.conf
+	  
+#### 242Q. What are Ingress and Egress in Kubernetes?
+Answer:
+
+Ingress: Rules to allow external traffic into the cluster.
+Egress: Outbound traffic from pods to outside the cluster.
+
+#### 243Q. Can we use ArgoCD without Helm?
+Answer:
+Yes 
+ArgoCD supports:
+
+Kustomize
+Plain YAML
+Helm
+Jsonnet
+Helm is optional.
