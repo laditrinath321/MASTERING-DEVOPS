@@ -944,10 +944,21 @@ sudo systemctl enable jenkins
 TRIVY : 
 DOCKER IMAGE SCANNING : 
 Trivy is an open-source vulnerability scanner designed to detect security issues in container images, 
-f
- ile systems, and Git repositories. 
-rpm -ivh https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux
-64bit.rpm 
+file systems, and Git repositories. 
+rpm -ivh https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux64bit.rpm 
+
+=======================================================================================
+my commands to install TRivy
+
+sudo apt install wget apt-transport-https gnupg lsb-release -y
+
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo gpg --dearmor -o /usr/share/keyrings/trivy.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/trivy.list
+
+sudo apt update
+sudo apt install trivy -y
+==================================================================================================
 rpm -uvh  
 1. Scanning a Docker Image 
 trivy image <image_name> 
