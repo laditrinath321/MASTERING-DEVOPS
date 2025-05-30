@@ -948,7 +948,43 @@ trivy image <image_name>
   trivy image <image_name> --severity HIGH,CRITICAL 
  
  
-================================================ 
+================================================
+
+My pipeline-sonarqube
+
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven3'
+    }
+
+    stages {
+        stage('Git checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/laditrinath321/mindcircuit15d.git'
+            }
+        }
+
+        stage('Compile stage (Maven)') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                echo "Running SonarQube Analysis"
+                sh '''
+                    mvn sonar:sonar \
+                        -Dsonar.host.url=http://3.87.208.237:9000 \
+                        -Dsonar.login=squ_b80dd24d0bf6891b8ae24075de105765310fd5d0
+                '''
+            }
+        }
+    }
+}
+
 ============================================= 
  
 Using Trivy in CI/CD:  
