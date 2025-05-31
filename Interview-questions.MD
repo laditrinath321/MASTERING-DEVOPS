@@ -1943,6 +1943,9 @@ YOUR TEAM HAS DONE SOME DELAY IN DELIVERY ; HOW WILL YOU PROJECT CLIENT
 - I always maintain good rapo with client 
 - in regular manner , timely updates .
 
+
 YOU DID SOME MISTAKE ; HOW WILL YOU PROJECT CLIENT : 
+WHY THIS COMPANY?
+ANY OFFERS IN HAND ?
 
 
