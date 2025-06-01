@@ -1915,3 +1915,37 @@ Plain YAML
 Helm
 Jsonnet
 Helm is optional.
+
+
+==========================================
+Managerial round Interview:
+
+Always be with Smile 
+Positive 
+Confident 
+No Blame game 
+Company ki help  --> Relocation ,  Salery(30 %) - ok for negotiation
+
+Strength: 
+Quick leraner, i belive in learning new thigs -->  Linux admin - switched to devops 
+Team player , 
+
+Weakness : Sometimes I over stretch , it might impact my sleep and health . 
+
+Biggest Achievment :  Earlier, in begining of project , We used to do manual deploymnets . I took resposibility to automate everything . 
+using , jenkins , ansible 
+
+YOUR TEAM HAS DONE SOME DELAY IN DELIVERY ; HOW WILL YOU PROJECT CLIENT 
+
+- i will try to be as honest as possible 
+- i will try to mitigate the issues as much as possible . 
+- there might be some dependency issues , i wil explaint to client , in a way client understants 
+- I always maintain good rapo with client 
+- in regular manner , timely updates .
+
+
+YOU DID SOME MISTAKE ; HOW WILL YOU PROJECT CLIENT : 
+WHY THIS COMPANY?
+ANY OFFERS IN HAND ?
+
+
