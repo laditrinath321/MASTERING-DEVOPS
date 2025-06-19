@@ -1,0 +1,198 @@
+
+
+PROJECT ---> CORE SECTOR ---> IT 
+
+Client --100 requiremetns :
+
+TECH STACK :
+
+PLATFORM:
+==========
+CLOUD : AWS 
+IAC TOOL :  TERRAFORM 
+
+APP STACK:
+=========
+PROG : JAVA 
+BUILD : MAVEN 
+VCS / SCM ---> GIT Hub
+CI/CD : JENKINS 
+CONF.AUTO/ CD :  ANSIBLE 
+CONT :  DOCKER 
+CONT ORCH : K8S 
+
+===========================================================
+
+ACTION PLAN :
+
+ASSUME CODE IS READY BY GIT HUB 
+
+DEVOPS TASKS :
+1. AWS ACCOUNT 
+2. IAM USER ( ROOT ) 
+3. TERRAFORM HCL COF (.TF ) -- TO PROVISION INFRA
+4. ENV . SETUP 
+       - JENKNS 
+	   - MAVEN 
+	   - SONARQUBE 
+	   - DOCKER 
+	   - TRIVY 
+	   - ANSIBLE 
+	   - EKS 
+	   
+	   
+	   
+==============================
+==================================
+
+ami-09e6f87a47903347c
+ami-09e6f87a47903347c
+
+argocd ---> conti . deployment 
+ansible ---> cont . delivery 
+
+=====
+   
+public_ip_app = "54.81.143.68"
+public_ip_jenkins = "54.162.229.243"
+
+ 
+ 
+   kubectl installation on aws linux machine  
+
+# Install kubectl 
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" 
+
+echo "$(cat kubectl.sha256) kubectl" | sha256sum --check 
+
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
+ 
+ 
+ ==========================================
+# Install eksctl 
+
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+
+sudo mv /tmp/eksctl /usr/local/bin 
+
+========================
+
+eksctl create cluster --name b15cluster --nodegroup-name b15ng --node-type t3.micro --nodes 5 --managed 
+
+
+============================
+sonartoken:
+squ_cb575cc8ca224fbea609e13110XXXXXXXX
+
+
+
+=========================
+Plugins:
+
+pipeline: stageview
+BlueOcean
+Docker
+Ansible 
+Blue ocean 
+=====================
+github token
+
+XXXXXXghp_pJh4aHdzhSpnNpZXXXXXXXXXXX
+==========================
+
+  pipeline {
+    agent any
+
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                echo 'scm git'
+                git branch: 'main', url: 'https://github.com/devopstraininghub/REALTIMEPROJECT.git'
+            }
+        }
+    	
+
+        stage('BuildingJar') {
+            steps {
+                echo 'maven build'
+                sh 'cd Application && mvn clean package'
+            }
+        }
+		
+	
+		
+        stage('sonar') {
+            steps {
+                echo 'scanning project'
+                sh 'ls -ltr'
+                sh '''cd Application && mvn sonar:sonar \\
+                      -Dsonar.host.url=http://54.162.229.243:9000 \\
+                      -Dsonar.login=squ_cb575cc8ca224fbea609e131107509b798ca4950'''
+            }
+    	}
+		
+       stage('Build docker image'){
+            steps{
+                script{
+                    echo 'docker image build'
+					sh 'cd Application && docker build -t devopshubg333/k8s:${BUILD_NUMBER} .'
+                }
+            }
+        }
+		
+       stage('docker image scan'){
+        steps{
+            sh "trivy image devopshubg333/k8s:${BUILD_NUMBER}"
+        }
+    }		
+ 
+
+		 stage('Push image to Hub'){
+            steps{
+                script{
+                   withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+                   sh 'docker login -u devopshubg333 -p ${dockerhub}'
+
+              }
+                   sh 'docker push devopshubg333/k8s:${BUILD_NUMBER}'
+                }
+            }
+        }
+		
+      stage('Update kubernetes Deployment manifest File') {
+        environment {
+            GIT_REPO_NAME = "REALTIMEPROJECT"
+            GIT_USER_NAME = "devopstraininghub"
+        }
+        steps {
+            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config user.email "madhu@gmail.com"
+                    git config user.name "madhu"
+                    BUILD_NUMBER=${BUILD_NUMBER}
+                  
+                    sed -i "s/k8s:.*/k8s:${BUILD_NUMBER}/g" Ansible/k8s_deployment.yaml
+                    git add .
+                    git commit -m "Update deployment image tag to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                '''
+            }
+        }
+    }
+
+    stage('k8s Deployment using ansible'){
+            steps{
+              
+                    script{
+                        ansiblePlaybook credentialsId: 'ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/', playbook: 'Ansible/ansible_k8s_deploy_playbook.yaml'
+                   
+                }
+            }
+        }
+}
+}
+
